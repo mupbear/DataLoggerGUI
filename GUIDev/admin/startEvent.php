@@ -14,6 +14,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
 <form id="myForm">
     <p>Please fill in the following boxes:</p>
     <input type="text" name="name" placeholder="Name of Event"><br>
+    <input type="text" name="moduleID" placeholder="ID of car or module"><br>
 
     <p>Type</p>
     <input type="radio" name="type" id="type1" value="R">
