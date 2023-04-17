@@ -25,16 +25,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
 	
 	<!-- First chart -->
 	<label for="select-chart1">Select Data Type:</label> 
-	<select id="select-chart1" onchange="updateType(myChart1, 'select-chart1')"></select> <label for="select1">Select Sensor:</label>
-    		<select id="select1" onchange="updateSensor(myChart1, 'select1')">
-	<div id="dropdowns">
-  		<div class="dropdown">
-    		<label for="select1">Select Sensor:</label>
-    		<select id="select1">
-    		</select>
-  		</div>
-	</div>
-	<br><button onclick="addDropdown()">Add Sensor</button>
+	<select id="select-chart1" onchange="updateGraph(myChart1, 'select-chart1')"></select>
 	<canvas id="myChart1" style="height: 50px; width: 400px;"></canvas>
 
 	<!-- Second chart -->
