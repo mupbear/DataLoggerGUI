@@ -1,0 +1,18 @@
+
+  .dark-mode {
+    background-color: #333333;
+    color: #f2f2f2;   
+  }
+  
+  .chartBox-dark {
+    width: 99%;
+        padding: 5px;
+        border-radius: 20px;
+        border: solid 3px #148484;
+        background: #5b7474;
+  }
+  
+  
+  
+  /* Add more styles as needed */
+  

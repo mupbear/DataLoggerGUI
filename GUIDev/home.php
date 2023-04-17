@@ -12,7 +12,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
 <head>
 
     <title>Home</title>
-    <link rel="stylesheet" type="text/css" href="app.css">
+    <link rel="stylesheet" type="text/css" href="css/app.css">
 
 </head>
 <body>
