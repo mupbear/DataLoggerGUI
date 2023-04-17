@@ -18,25 +18,33 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
 <body>
 
 <br>
-	<!-- First chart -->
-	<p>Chart 1</p>
-	<label for="select-unit">Select Unit:</label>
-	<select id="select-unit" onchange="selectDataSet('select-unit')"></select>
-
-	<label for="select-dataset">Select Dataset:</label>
-	<select id="select-dataset" onchange="updateData(myChart1, 'select-unit', 'select-dataset')" ></select>
+	<form method="POST" action="gps.php">   
+     <button> Map </button>
+    </form><br>
+	<button id="addChart">Add Graph</button><br><br>
 	
+	<!-- First chart -->
+	<label for="select-chart1">Select Data Type:</label> 
+	<select id="select-chart1" onchange="updateType(myChart1, 'select-chart1')"></select> <label for="select1">Select Sensor:</label>
+    		<select id="select1" onchange="updateSensor(myChart1, 'select1')">
+	<div id="dropdowns">
+  		<div class="dropdown">
+    		<label for="select1">Select Sensor:</label>
+    		<select id="select1">
+    		</select>
+  		</div>
+	</div>
+	<br><button onclick="addDropdown()">Add Sensor</button>
 	<canvas id="myChart1" style="height: 50px; width: 400px;"></canvas>
 
 	<!-- Second chart -->
-	<label for="select-chart2">Select Chart 2:</label>
-	<select id="select-chart2" onchange="updateChart(myChart2, 'select-chart2')"></select>
+	<label for="select-chart2">Select Data:</label>
+	<select id="select-chart2" onchange="updateGraph(myChart2, 'select-chart2')"></select>
 	<canvas id="myChart2" style="height: 50px; width: 400px;"></canvas>
 
 	<!-- Third chart -->
-	<label for="select-chart3">Select Chart 3:</label>
-	<select id="select-chart3" ></select>
-	<button id="myButton" onclick="showData()"></button>
+	<label for="select-chart3">Select Data:</label>
+	<select id="select-chart3" onchange="updateGraph(myChart3, 'select-chart3')"></select>
 	<canvas id="myChart3" style="height: 50px; width: 400px;"></canvas>
 
 	<!-- The script for updating the charts and checking json file. -->
