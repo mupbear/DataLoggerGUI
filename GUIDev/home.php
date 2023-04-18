@@ -166,9 +166,10 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
         .links-container a 
         {
             margin-bottom: 3px;
-            padding: 3px;
+            padding: 5px;
             color: #fff;
             text-decoration: none;
+            transition: all 0.3s ease;
         }
 
         .links-container img {
@@ -180,7 +181,14 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
         .links-container a:hover 
         {
             background-color: #148484;
+            transform: scale(1.2);
         }
+
+        .links-container a:focus, a:active 
+        {
+            transform: scale(1); 
+        }
+
 
         .curvy-line
         {
