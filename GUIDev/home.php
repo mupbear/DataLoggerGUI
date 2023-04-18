@@ -156,7 +156,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
         .links-container 
         {
             position: fixed;
-            bottom: 0;
+            bottom: 2%;
             right: 12%;
             display: flex;
             flex-direction: column;
