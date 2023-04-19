@@ -1,0 +1,27 @@
+[project]
+name = "web-server-racing-data-analysis"
+version = "0.0.0"
+description = "A web server that features a GUI for racing data analysis."
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [
+    { name = "Dana Groner" },
+    { name = "Jan Sevrin" },
+    { name = "Joost Asbreuk" }
+]
+
+dependencies = [
+    "pydantic",
+    "starlite==1.51.10",
+    "uvicorn[standard]"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "pytest-asyncio"
+]
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"

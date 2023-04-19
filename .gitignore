@@ -1,0 +1,10 @@
+*.egg-info/
+.coverage
+.idea/
+.python-version
+__pycache__/
+.pytest_cache/
+.venv
+.vscode/
+build/
+dist/
