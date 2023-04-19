@@ -5,7 +5,7 @@ git config --global core.autocrlf false
 git config --global core.eol lf
 ```
 
-Composing this Docker dev enviorenment:
+Composing the Docker dev enviorenment:
 ```
 docker compose up
 ```
