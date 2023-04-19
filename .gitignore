@@ -6,5 +6,6 @@ __pycache__/
 .pytest_cache/
 .venv
 .vscode/
+.vs/
 build/
 dist/
