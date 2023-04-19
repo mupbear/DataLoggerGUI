@@ -1,4 +1,9 @@
 # DataLoggerGUI
+Ensure your git config is set to LF line endings:
+```
+git config --global core.autocrlf false
+git config --global core.eol lf
+```
 
 Building the Docker image:
 ```

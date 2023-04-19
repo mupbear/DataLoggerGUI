@@ -4,7 +4,7 @@ FROM python:3.11-slim
 # expose the used ports
 EXPOSE 8000
 
-# set the working directory in the container
+# set the working directory
 WORKDIR /DataLoggerGUI
 
 # copy the content of the repo to our working directory
@@ -28,6 +28,9 @@ RUN pip install -e .
 RUN addgroup --system --gid 1001 "app-user"
 RUN adduser --system --uid 1001 "app-user"
 USER "app-user"
+
+# Make git repo usable
+RUN git config --global --add safe.directory $(pwd)
 
 # command to run on container start
 ENTRYPOINT ["/bin/sh", "-c"]
