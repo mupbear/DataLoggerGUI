@@ -12,7 +12,7 @@ authors = [
 
 dependencies = [
     "pydantic",
-    "starlite==1.51.10",
+    "litestar",
     "uvicorn[standard]"
 ]
 

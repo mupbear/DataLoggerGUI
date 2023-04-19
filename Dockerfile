@@ -2,7 +2,7 @@
 FROM python:3.11-slim
 
 # set the working directory in the container
-WORKDIR /app
+WORKDIR /DataLoggerGUI
 
 # copy the content of the repo to our working directory
 COPY . ./
