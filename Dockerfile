@@ -32,6 +32,7 @@ RUN adduser --system --uid 1001 "app-user"
 RUN chown -R app-user .
 USER "app-user"
 
+# Set default shell of app-user to bash
 ENV SHELL /bin/bash
 
 # Make git repo usable
