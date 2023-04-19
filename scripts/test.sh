@@ -6,5 +6,5 @@ set -o pipefail
 set -o nounset  
 
 # starts Starlite application  
-echo Starting Starlite Production App on port 8000... 
-uvicorn --port 8000 app.app:app
+echo Starting Starlite Testing App on port 8001... 
+uvicorn --port 8001 app.app:app

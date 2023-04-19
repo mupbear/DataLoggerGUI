@@ -3,12 +3,10 @@ FROM python:3.11-slim
 
 # expose the used ports
 EXPOSE 8000
+EXPOSE 8001
 
 # set the working directory
 WORKDIR /DataLoggerGUI
-
-# copy the content of the repo to our working directory
-COPY . ./
 
 # install bash
 RUN apt-get update \
@@ -17,6 +15,9 @@ RUN apt-get update \
 && apt-get install -y --no-install-recommends git \
 && apt-get purge -y --auto-remove \
 && rm -rf /var/lib/apt/lists/*
+
+# copy the content of the repo to our working directory
+COPY . ./
 
 # make entry script executable
 RUN chmod +x ./scripts/entry.sh
