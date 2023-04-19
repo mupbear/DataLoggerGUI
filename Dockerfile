@@ -19,8 +19,9 @@ RUN apt-get update \
 # copy the content of the repo to our working directory
 COPY . ./
 
-# make entry script executable
+# make scripts executable
 RUN chmod +x ./scripts/entry.sh
+RUN chmod +x ./scripts/test.sh
 
 # install dependencies
 RUN pip install -e .
@@ -28,7 +29,10 @@ RUN pip install -e .
 # create a non-root user and switch to it, for security.
 RUN addgroup --system --gid 1001 "app-user"
 RUN adduser --system --uid 1001 "app-user"
+RUN chown -R app-user .
 USER "app-user"
+
+ENV SHELL /bin/bash
 
 # Make git repo usable
 RUN git config --global --add safe.directory $(pwd)
