@@ -30,19 +30,28 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
 	<form method="POST" action="admin/admin.php"><button> Admin </button></form>
 	<form method="POST" action="gps.php"><button> Map </button></form>
   
-	
+	<!-- Test Chart -->
+		<div class="container">
+			<div class="containerBody">
+  			<canvas id="myChart"></canvas>
+			</div>
+		</div>
+
+
 	<!-- First chart -->
-	<div class="graph-container">
+	<div class="container">
 		<div id= "chart1Div" class="chartBox">
+			<div class="containerBody">
 	<label for="select-chart1">Select Data:</label> 
 	<select id="select-chart1" onchange="updateGraph(myChart1, 'select-chart1')"></select><button onclick="resetZoomChart(myChart1)">Reset Zoom</button><button onclick="zoomInButton(myChart1)">+</button><button onclick="zoomOutButton(myChart1)">-</button>
-	<canvas id="myChart1" style="height: 250px; width: 100%;" ></canvas>
+	<canvas id="myChart1"></canvas>
+			</div>
 		</div>
 	</div>
 
 
 	<!-- Second chart -->
-	<div class="graph-container">
+	<div class="container">
 		<div id="chart2Div" class="chartBox">
 	<label for="select-chart2">Select Data:</label>
 	<select id="select-chart2" onchange="updateGraph(myChart2, 'select-chart2')"></select><button onclick="resetZoomChart(myChart2)">Reset Zoom</button>
@@ -51,7 +60,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
 	</div>
 
 	<!-- Third chart -->
-	<div class="graph-container">
+	<div class="container">
 		<div id="chart3Div" class="chartBox">
 	<label for="select-chart3">Select Data:</label>
 	<select id="select-chart3" onchange="updateGraph(myChart3, 'select-chart3')"></select><button onclick="resetZoomChart(myChart3)">Reset Zoom</button>
@@ -60,7 +69,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
 	</div>
 
 	<!-- Fourth chart -->
-	<div class="graph-container">
+	<div class="container">
 		<div id="chart4Div" class="chartBox">
 	<label for="select-chart4">Select Data:</label>
 	<select id="select-chart4" onchange="updateGraph(myChart4, 'select-chart4')"></select><button onclick="resetZoomChart(myChart4)">Reset Zoom</button>
@@ -69,7 +78,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
 	</div>
 
 	<!-- Fifth chart -->
-	<div class="graph-container">
+	<div class="container">
 		<div id="chart5Div" class="chartBox">
 	<label for="select-chart5">Select Data:</label>
 	<select id="select-chart5" onchange="updateGraph(myChart5, 'select-chart5')"></select><button onclick="resetZoomChart(myChart5)">Reset Zoom</button>

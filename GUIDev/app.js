@@ -1,3 +1,27 @@
+var ctx = document.getElementById('myChart').getContext('2d');
+var myChart = new Chart(ctx, {
+  type: 'line',
+  data: {
+    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+    datasets: [{
+      label: 'My Dataset',
+      data: [1, 2, 3, 4, 5, 6, 7],
+      borderColor: 'rgb(255, 99, 132)',
+      borderWidth: 2
+    }]
+  },
+  options: {
+    maintainAspectRatio: false,
+    // Add any additional chart options here
+  }
+});
+const graphBody = document.querySelector('.containerBody');
+
+if(myChart.data.datasets[0].data.length > 3){
+  graphBody.style.width = '5000px';
+}
+
+
 var dark = false;
 
 var ctx1 = document.getElementById('myChart1').getContext('2d');
@@ -31,7 +55,7 @@ var ctx2 = document.getElementById('myChart2').getContext('2d');
 		});
 
 var chartOptionsDark = {
-
+      maintainAspectRatio: false,
       scales: {
         x: {
           ticks: {
@@ -70,7 +94,7 @@ var chartOptionsDark = {
 
 
 var chartOptions = {
-
+   maintainAspectRatio: false,
   scales: {
     x: {
       ticks: {

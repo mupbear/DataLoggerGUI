@@ -13,6 +13,9 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
 
     <title>Home</title>
     <link rel="stylesheet" type="text/css" href="css/app.css">
+    <style>
+
+        </style>
 
 </head>
 <body>
