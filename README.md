@@ -17,5 +17,5 @@ docker build -t web-server-racing-data-analysis .
 
 Running the Docker container through terminal:
 ```
-docker run -it -p 8000-8001:8000-8001 web-server-racing-data-analysis
+docker run -it -p 8000:8000 web-server-racing-data-analysis
 ```

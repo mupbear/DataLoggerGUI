@@ -7,4 +7,5 @@ set -o nounset
 
 # starts Starlite application  
 echo Starting Starlite Production App on port 8000... 
-uvicorn --host 0.0.0.0 --port 8000 app.app:app
+# remove --reload option when in production
+uvicorn --host 0.0.0.0 --port 8000 --reload app.app:app

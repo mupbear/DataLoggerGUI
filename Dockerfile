@@ -3,7 +3,6 @@ FROM python:3.11-slim
 
 # expose the used ports
 EXPOSE 8000
-EXPOSE 8001
 
 # set the working directory
 WORKDIR /DataLoggerGUI
@@ -21,7 +20,6 @@ COPY . ./
 
 # make scripts executable
 RUN chmod +x ./scripts/entry.sh
-RUN chmod +x ./scripts/test.sh
 
 # install dependencies
 RUN pip install -e .
