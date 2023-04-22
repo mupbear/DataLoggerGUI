@@ -1,0 +1,26 @@
+{% extends "base/base.html.jinja2" %}
+{% set active_page = "root" %}
+
+{% block style %}
+<link rel="stylesheet" href="{{ url_for_static_asset('static', 'css/style.css')  }}">
+{% endblock style %}
+
+{% block main %}
+<div id="bg"></div>
+<form>
+  <div class="form-field">
+    <input type="email" placeholder="Email / Username" required/>
+  </div>
+  
+  <div class="form-field">
+    <input type="password" placeholder="Password" required/>
+  </div>
+  
+  <div class="form-field">
+    <button class="btn" type="submit">Log in</button>
+  </div>
+</form>
+{% endblock main %}
+
+{% block script %}
+{% endblock script %}

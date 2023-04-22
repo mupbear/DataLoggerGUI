@@ -10,8 +10,10 @@ WORKDIR /DataLoggerGUI
 # install bash
 RUN apt-get update \
 && apt-get upgrade \
+&& apt-get install -y --no-install-recommends sudo \
 && apt-get install -y --no-install-recommends bash \
 && apt-get install -y --no-install-recommends git \
+&& apt-get install -y --no-install-recommends vim \
 && apt-get purge -y --auto-remove \
 && rm -rf /var/lib/apt/lists/*
 

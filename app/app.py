@@ -1,19 +1,37 @@
-from litestar import Litestar, get, MediaType
+from litestar import Litestar, MediaType, get, post
+from litestar.static_files.config import StaticFilesConfig
+from litestar.contrib.jinja import JinjaTemplateEngine
+from litestar.response_containers import Template
+from litestar.template.config import TemplateConfig
 
-html_hello_world = """
-<html>
-    <head>
-        <title>Some HTML in here</title>
-    </head>
-    <body>
-        <h1>Keeping the tradition alive with hello world.</h1>
-    </body>
-</html>
-"""
+from pathlib import Path
 
-@get("/", media_type=MediaType.HTML)
-def hello_world() -> str:
-    return html_hello_world
+@get("/", media_type=MediaType.HTML, cache=False)
+async def get_root() -> Template:
+  return Template(
+    name="root.html.jinja2",
+    context={"title": "Home"},
+  )
 
+@get("/event", media_type=MediaType.HTML, cache=False)
+async def get_event() -> Template:
+  return Template(
+    name="event.html.jinja2",
+    context={"title": "Racing Event Analysis"},
+  )
 
-app = Litestar(route_handlers=[hello_world])
+@post("/event", media_type=MediaType.JSON)
+def post_event(data: dict[str, str]) -> dict[str, str]:
+  print(data)
+  return data
+
+app = Litestar(
+    route_handlers=[get_root, get_event, post_event],
+    template_config=TemplateConfig(
+        directory=Path("templates"),
+        engine=JinjaTemplateEngine,
+    ),
+    static_files_config=[
+        StaticFilesConfig(directories=[Path("static")], path="/static", name="static")
+    ],
+)

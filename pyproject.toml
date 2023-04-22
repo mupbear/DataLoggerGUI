@@ -13,7 +13,9 @@ authors = [
 dependencies = [
     "pydantic",
     "litestar",
-    "uvicorn[standard]"
+    "uvicorn",
+    "litestar[jinja]",
+    "asyncmy"
 ]
 
 [project.optional-dependencies]
@@ -21,6 +23,12 @@ dev = [
     "pytest",
     "pytest-asyncio"
 ]
+
+[tool.setuptools.packages.find]
+where = []
+include = []
+exclude = [] 
+namespaces = false 
 
 [build-system]
 requires = ["setuptools"]
