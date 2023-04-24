@@ -165,11 +165,11 @@
 </head>
 
 <body>
-<img src="Externalimages\car.jpeg" alt="A car" class="img1">
-<img src="Externalimages\car_2.jpeg" alt="A car" class="img2">
+<img src="pictures\car.jpeg" alt="A car" class="img1">
+<img src="pictures\car_2.jpeg" alt="A car" class="img2">
 
 <a href="https://regterschotracing.com/" target="_blank">
-        <img src="Externalimages\reg_race.png" alt="company link" class="img3">
+        <img src="pictures\reg_race.png" alt="company link" class="img3">
     </a>
 
     <h1></h1>
@@ -205,25 +205,25 @@
 <!-- Full-width images with number and caption text -->
 <div class="mySlides fade">
   
-    <center><img src="Externalimages/img1.jpg" style="width:700px;height:400px;"></center> <!--style="width:500px;height:600px;"--> <!--- style="width:50%"-->
+    <center><img src="pictures/img1.jpg" style="width:700px;height:400px;"></center> <!--style="width:500px;height:600px;"--> <!--- style="width:50%"-->
  
   </div>
 
   <div class="mySlides fade">
 
-    <center><img src="Externalimages/img2.jpg" style="width:700px;height:400px;"></center>
+    <center><img src="pictures/img2.jpg" style="width:700px;height:400px;"></center>
  
   </div>
 
   <div class="mySlides fade">
  
-    <center><img src="Externalimages/img3.jpg" style="width:700px;height:400px;"></center>
+    <center><img src="pictures/img3.jpg" style="width:700px;height:400px;"></center>
  
   </div>
 
   <div class="mySlides fade">
 
-    <center><img src="Externalimages/img4.jpg" style="width:700px;height:400px;"></center>
+    <center><img src="pictures/img4.jpg" style="width:700px;height:400px;"></center>
  
   </div>
 
