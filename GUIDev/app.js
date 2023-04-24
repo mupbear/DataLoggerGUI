@@ -3,7 +3,7 @@ var dark = false;
 const data = {
   datasets: [
     {
-      label: 'Sales',
+      label: 'Sales1',
       data: [{"x": "2022-01-01T01:00:00Z", "y": 30},
       {"x": "2022-01-01T02:00:00Z", "y": 45},
       {"x": "2022-01-01T03:00:00Z", "y": 55},
@@ -14,8 +14,38 @@ const data = {
       {"x": "2022-01-01T08:00:00Z", "y": 60},
       {"x": "2022-01-01T09:00:00Z", "y": 50},
       {"x": "2022-01-01T10:00:00Z", "y": 55}],
-      borderWidth: 1,
+      
       yAxisID: 'y1'
+    },
+    {
+      label: 'Sales2',
+      data: [{"x": "2022-01-01T01:00:00Z", "y": 30},
+      {"x": "2022-01-01T02:00:00Z", "y": 45},
+      {"x": "2022-01-01T03:00:00Z", "y": 55},
+      {"x": "2022-01-01T04:00:00Z", "y": 50},
+      {"x": "2022-01-01T05:00:00Z", "y": 60},
+      {"x": "2022-01-01T06:00:00Z", "y": 65},
+      {"x": "2022-01-01T07:00:00Z", "y": 70},
+      {"x": "2022-01-01T08:00:00Z", "y": 60},
+      {"x": "2022-01-01T09:00:00Z", "y": 50},
+      {"x": "2022-01-01T10:00:00Z", "y": 55}],
+      
+      yAxisID: 'y2'
+    },
+    {
+      label: 'Sales3',
+      data: [{"x": "2022-01-01T01:00:00Z", "y": 30},
+      {"x": "2022-01-01T02:00:00Z", "y": 45},
+      {"x": "2022-01-01T03:00:00Z", "y": 55},
+      {"x": "2022-01-01T04:00:00Z", "y": 50},
+      {"x": "2022-01-01T05:00:00Z", "y": 60},
+      {"x": "2022-01-01T06:00:00Z", "y": 65},
+      {"x": "2022-01-01T07:00:00Z", "y": 70},
+      {"x": "2022-01-01T08:00:00Z", "y": 60},
+      {"x": "2022-01-01T09:00:00Z", "y": 50},
+      {"x": "2022-01-01T10:00:00Z", "y": 55}],
+      
+      yAxisID: 'y3'
     },
     {
       label: 'Expenses',
@@ -29,8 +59,8 @@ const data = {
       {"x": "2022-01-01T08:00:00Z", "y": 60},
       {"x": "2022-01-01T09:00:00Z", "y": 40},
       {"x": "2022-01-01T10:00:00Z", "y": 30}],
-      borderWidth: 1,
-      yAxisID: 'y1'
+      
+      yAxisID: 'y4'
     },
     {
       label: 'Profit',
@@ -44,8 +74,8 @@ const data = {
       {"x": "2022-01-01T08:30:00Z", "y": 60},
       {"x": "2022-01-01T09:00:00Z", "y": 40},
       {"x": "2022-01-01T10:00:00Z", "y": 30}],
-      borderWidth: 1,
-      yAxisID: 'y2'
+      
+      yAxisID: 'y4'
     },
   ]
 };
@@ -69,8 +99,8 @@ displayFormats: {
 },}
   },
   y1: {
-    ticks: {color: '#81C8BD'},
-    grid: {color: '#81C8BD'},
+    ticks: {color: '#FFFFFF'},
+    grid: {color: '#FFFFFF'},
       stack: 'demo'
   },
   y2: {
@@ -78,10 +108,21 @@ displayFormats: {
     grid: {color: '#81C8BD'},
       stack: 'demo'
   },
+  y3: {
+    ticks: {color: '#FFFFFF'},
+    grid: {color: '#FFFFFF'},
+      stack: 'demo'
+  },
+  y4: {
+    ticks: {color: '#81C8BD'},
+    grid: {color: '#81C8BD'},
+      stack: 'demo'
+  },
 },
-    //maintainAspectRatio: false, // disable aspect ratio
+    maintainAspectRatio: false, // disable aspect ratio
     plugins: {
       legend:{
+        position:'left',
         labels: {
           color: 'white'
         },
@@ -114,14 +155,25 @@ displayFormats: {
       stack: 'demo'
   },
   y2: {
+    ticks: {color: '#148484'},
+    grid: {color: '#148484'},
+      stack: 'demo'
+  },
+  y3: {
     ticks: {color: 'white'},
     grid: {color: 'white'},
       stack: 'demo'
   },
+  y4: {
+    ticks: {color: '#148484'},
+    grid: {color: '#148484'},
+      stack: 'demo'
+  },
 },
-    //maintainAspectRatio: false, // disable aspect ratio
+    maintainAspectRatio: false, // disable aspect ratio
     plugins: {
       legend:{
+        position:'left',
         labels: {
           color: 'white'
         },
@@ -179,14 +231,14 @@ const body = document.body;
 checkbox.addEventListener('change', function() {
   if (this.checked) {
     body.classList.add('dark-mode');
-    chartDiv.classList.add('chartBox-dark');
+    chartDiv.classList.add('dataGraph-dark');
 
     dark = true;
     myChart.options = chartOptionsDark;
     myChart.update();
   } else {
     body.classList.remove('dark-mode');
-    chartDiv.classList.remove('chartBox-dark');
+    chartDiv.classList.remove('dataGraph-dark');
 
     dark = false;
     myChart.options = chartOptions;

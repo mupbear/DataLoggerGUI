@@ -25,20 +25,56 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
 </head>
 <body>
 
-<input type="checkbox" id="dark-mode-checkbox" style="position: fixed; top: 20px; right: 20px; z-index: 1;"><label for="dark-mode-checkbox" style="position: fixed; top: 20px; right: 40px;">Dark mode:</label>
-  
-<br>
+
+<div class="topButtons">
+	<input type="checkbox" id="dark-mode-checkbox" style="position: fixed; top: 20px; right: 20px; z-index: 1;"><label for="dark-mode-checkbox" style="position: fixed; top: 20px; right: 40px;">Dark mode:</label>
 	<form method="POST" action="home.php"><button> Home </button></form> 
 	<form method="POST" action="admin/admin.php"><button> Admin </button></form>
 	<form method="POST" action="gps.php"><button> Map </button></form>
+</div>
 
-
-	<!-- Graph -->
-	<div id="chartDiv" class="chartBox">
-	<label for="select-chart">Select Data:</label>
-	<select id="select-chart" onchange="updateGraph(myChart, 'select-chart')"></select>
-	<canvas id="myChart" style="width: 100%;"></canvas>
+<div class="liveDataTop">
+	<label>Live Data</label><br>
+	<label>RPM,OilT,OilP,CLT,"DiffOil"</label>
+</div>	
+<br>
+<div class="userContainer">
+	<label>Select Data</label><br>
+	<div class="userSelect">
+		<label for="select-chart">Select Y1:</label>
+		<select id="select-chart" onchange="updateGraph(myChart, 'select-chart')"></select>
+		<div class="userLive">
+			<label>Live Y1</label>
+		</div>	
 	</div>
+	<div class="userSelect">
+		<label for="select-chart">Select Y2:</label>
+		<select id="select-chart" onchange="updateGraph(myChart, 'select-chart')"></select>
+		<div class="userLive">
+			<label>Live Y2</label>
+		</div>	
+	</div>
+	<div class="userSelect">
+		<label for="select-chart">Select Y3:</label>
+		<select id="select-chart" onchange="updateGraph(myChart, 'select-chart')"></select>
+		<div class="userLive">
+			<label>Live Y3</label>
+		</div>	
+	</div>
+	<div class="userSelect">
+		<label for="select-chart">Select Y4:</label>
+		<select id="select-chart" onchange="updateGraph(myChart, 'select-chart')"></select>
+		<div class="userLive">
+			<label>Live Y4</label>
+		</div>	
+	</div>
+</div>
+<br>
+<div class="dataContainer">
+	<div id="chartDiv" class="dataGraph">
+		<canvas id="myChart" ></canvas>
+	</div>
+</div>
 	
 	
 	<!-- The script for updating the charts and checking json file. -->
