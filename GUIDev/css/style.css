@@ -43,24 +43,41 @@ body {
     width: 20%;
 		height: 100px;
 		border-radius: 10px;
-    border: solid 3px #FFFFFF;
 		margin-right: 10px;
+  }
+
+  .userLive{
+    border: solid 3px #FFFFFF;
+  }
+
+  
+  .legendButton{
+    padding: 5px 10px;
+    margin: 10px;
+    border-radius: 20px;
+    color: white;
+    cursor: pointer;
   }
   
   
   .dataContainer {
+    display: flex;
     height: 750px;
     width: 100%; /* set the desired width */
-    max-width: 100%;
+    max-width: 99%;
     overflow-x: scroll;
-    margin: 0 auto; /* center the container horizontally */
+    margin: 0 auto; /* center the container horizontally */padding: 5px;
+    border-radius: 10px;
+    border: solid 3px #FFFFFF;
+    background: #81C8BD;
   }
-  
   .dataGraph {
-    height: 95%;
+    margin-left: 20px;
+    height: 100%;
     width: 100%;
-        padding: 5px;
-        border-radius: 10px;
-        border: solid 3px #FFFFFF;
-        background: #81C8BD;
+  }
+
+  .dataRecent{
+    width: 200px;
+    border: solid 3px #FFFFFF;
   }

@@ -35,7 +35,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
 
 <div class="liveDataTop">
 	<label>Live Data</label><br>
-	<label>RPM,OilT,OilP,CLT,"DiffOil"</label>
+	<label>FuelLevel,OilT,OilP,CLT,"DiffOil"</label>
 </div>	
 <br>
 <div class="userContainer">
@@ -44,34 +44,38 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
 		<label for="select-chart">Select Y1:</label>
 		<select id="select-chart" onchange="updateGraph(myChart, 'select-chart')"></select>
 		<div class="userLive">
-			<label>Live Y1</label>
+			<button id="0" onclick="toggleData(0)" class="legendButton"></button>
 		</div>	
 	</div>
 	<div class="userSelect">
 		<label for="select-chart">Select Y2:</label>
 		<select id="select-chart" onchange="updateGraph(myChart, 'select-chart')"></select>
 		<div class="userLive">
-			<label>Live Y2</label>
+			<button id="1" onclick="toggleData(1)" class="legendButton"></button>
 		</div>	
 	</div>
 	<div class="userSelect">
 		<label for="select-chart">Select Y3:</label>
 		<select id="select-chart" onchange="updateGraph(myChart, 'select-chart')"></select>
 		<div class="userLive">
-			<label>Live Y3</label>
+			<button id="2" onclick="toggleData(2)" class="legendButton"></button>
 		</div>	
 	</div>
 	<div class="userSelect">
 		<label for="select-chart">Select Y4:</label>
 		<select id="select-chart" onchange="updateGraph(myChart, 'select-chart')"></select>
 		<div class="userLive">
-			<label>Live Y4</label>
+			<button id="3" onclick="toggleData(3)" class="legendButton"></button>
+			<button id="4" onclick="toggleData(4)" class="legendButton"></button>
 		</div>	
 	</div>
 </div>
 <br>
-<div class="dataContainer">
-	<div id="chartDiv" class="dataGraph">
+<div id="chartDiv" class="dataContainer">
+	<div class="dataRecent">
+		<label>Live data</label>
+	</div>	
+	<div class="dataGraph">
 		<canvas id="myChart" ></canvas>
 	</div>
 </div>

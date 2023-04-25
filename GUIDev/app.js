@@ -3,7 +3,7 @@ var dark = false;
 const data = {
   datasets: [
     {
-      label: 'Sales1',
+      label: 'Y1',
       data: [{"x": "2022-01-01T01:00:00Z", "y": 30},
       {"x": "2022-01-01T02:00:00Z", "y": 45},
       {"x": "2022-01-01T03:00:00Z", "y": 55},
@@ -18,7 +18,7 @@ const data = {
       yAxisID: 'y1'
     },
     {
-      label: 'Sales2',
+      label: 'Y2',
       data: [{"x": "2022-01-01T01:00:00Z", "y": 30},
       {"x": "2022-01-01T02:00:00Z", "y": 45},
       {"x": "2022-01-01T03:00:00Z", "y": 55},
@@ -33,7 +33,7 @@ const data = {
       yAxisID: 'y2'
     },
     {
-      label: 'Sales3',
+      label: 'Y3',
       data: [{"x": "2022-01-01T01:00:00Z", "y": 30},
       {"x": "2022-01-01T02:00:00Z", "y": 45},
       {"x": "2022-01-01T03:00:00Z", "y": 55},
@@ -48,7 +48,7 @@ const data = {
       yAxisID: 'y3'
     },
     {
-      label: 'Expenses',
+      label: 'Y4',
       data: [{"x": "2022-01-01T01:00:00Z", "y": 20},
       {"x": "2022-01-01T02:00:00Z", "y": 35},
       {"x": "2022-01-01T03:00:00Z", "y": 45},
@@ -63,7 +63,7 @@ const data = {
       yAxisID: 'y4'
     },
     {
-      label: 'Profit',
+      label: 'Y4',
       data: [{"x": "2022-01-01T01:00:00Z", "y": 20},
       {"x": "2022-01-01T02:00:00Z", "y": 35},
       {"x": "2022-01-01T03:00:00Z", "y": 45},
@@ -122,7 +122,7 @@ displayFormats: {
     maintainAspectRatio: false, // disable aspect ratio
     plugins: {
       legend:{
-        position:'left',
+        display: false,
         labels: {
           color: 'white'
         },
@@ -173,7 +173,7 @@ displayFormats: {
     maintainAspectRatio: false, // disable aspect ratio
     plugins: {
       legend:{
-        position:'left',
+        display: false,
         labels: {
           color: 'white'
         },
@@ -246,3 +246,27 @@ checkbox.addEventListener('change', function() {
   }
 });
 
+function toggleData(value){
+  const visibilityData = myChart.isDatasetVisible(value);
+  if(visibilityData === true){
+    myChart.hide(value);
+  }
+  if(visibilityData === false){
+    myChart.show(value);
+  }
+}
+
+document.getElementById('0').style.backgroundColor = myChart.data.datasets[0].backgroundColor;
+document.getElementById('0').innerText = myChart.data.datasets[0].label;
+
+document.getElementById('1').style.backgroundColor = myChart.data.datasets[1].backgroundColor;
+document.getElementById('1').innerText = myChart.data.datasets[1].label;
+
+document.getElementById('2').style.backgroundColor = myChart.data.datasets[2].backgroundColor;
+document.getElementById('2').innerText = myChart.data.datasets[2].label;
+
+document.getElementById('3').style.backgroundColor = myChart.data.datasets[3].backgroundColor;
+document.getElementById('3').innerText = myChart.data.datasets[3].label;
+
+document.getElementById('4').style.backgroundColor = myChart.data.datasets[4].backgroundColor;
+document.getElementById('4').innerText = myChart.data.datasets[4].label;
