@@ -1,5 +1,5 @@
 [  
- {    "value": "Empty",    "label": "None Selected"  },
+ {    "value": "Empty",    "label": "None Selected", "data":{"datasets":[]}  },
  {
   "value": "percentage",
   "label": "Percentage (%)",
@@ -8,6 +8,7 @@
             {
         "value": "TPS",
         "label": "Throttle Position",
+        "yAxisID": "y1",
         "data": 		[
           {"x": "2022-01-01T00:00:00Z", "y": 20},
           {"x": "2022-01-01T01:00:00Z", "y": 20},
