@@ -9,6 +9,17 @@
         border-radius: 20px;
         border: solid 3px #148484;
         background: #5b7474;
+        background: repeating-linear-gradient(
+    to top,
+    #333333 0px,
+    #333333 27%,
+    #5b7474 27%,
+    #5b7474 50%,
+    #333333 50%,
+    #333333 72.7%,
+    #5b7474 72.7%,
+    #5b7474
+        );
   }
   
   

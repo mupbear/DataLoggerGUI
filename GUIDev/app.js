@@ -14,6 +14,7 @@ const data = {
       {"x": "2022-01-01T08:00:00Z", "y": 60},
       {"x": "2022-01-01T09:00:00Z", "y": 50},
       {"x": "2022-01-01T10:00:00Z", "y": 55}],
+      hidden: true, // this dataset is hidden by default
       
       yAxisID: 'y1'
     },
@@ -29,6 +30,7 @@ const data = {
       {"x": "2022-01-01T08:00:00Z", "y": 60},
       {"x": "2022-01-01T09:00:00Z", "y": 50},
       {"x": "2022-01-01T10:00:00Z", "y": 55}],
+      hidden: true, // this dataset is hidden by default
       
       yAxisID: 'y2'
     },
@@ -44,6 +46,7 @@ const data = {
       {"x": "2022-01-01T08:00:00Z", "y": 60},
       {"x": "2022-01-01T09:00:00Z", "y": 50},
       {"x": "2022-01-01T10:00:00Z", "y": 55}],
+      hidden: true, // this dataset is hidden by default
       
       yAxisID: 'y3'
     },
@@ -59,6 +62,7 @@ const data = {
       {"x": "2022-01-01T08:00:00Z", "y": 60},
       {"x": "2022-01-01T09:00:00Z", "y": 40},
       {"x": "2022-01-01T10:00:00Z", "y": 30}],
+      hidden: true, // this dataset is hidden by default
       
       yAxisID: 'y4'
     },
@@ -74,6 +78,7 @@ const data = {
       {"x": "2022-01-01T08:30:00Z", "y": 60},
       {"x": "2022-01-01T09:00:00Z", "y": 40},
       {"x": "2022-01-01T10:00:00Z", "y": 30}],
+      hidden: true, // this dataset is hidden by default
       
       yAxisID: 'y4'
     },
@@ -99,8 +104,8 @@ displayFormats: {
 },}
   },
   y1: {
-    ticks: {color: '#FFFFFF'},
-    grid: {color: '#FFFFFF'},
+    ticks: {color: '#81C8BD'},
+    grid: {color: '#81C8BD'},
       stack: 'demo'
   },
   y2: {
@@ -109,8 +114,8 @@ displayFormats: {
       stack: 'demo'
   },
   y3: {
-    ticks: {color: '#FFFFFF'},
-    grid: {color: '#FFFFFF'},
+    ticks: {color: '#81C8BD'},
+    grid: {color: '#81C8BD'},
       stack: 'demo'
   },
   y4: {
@@ -155,8 +160,8 @@ displayFormats: {
       stack: 'demo'
   },
   y2: {
-    ticks: {color: '#148484'},
-    grid: {color: '#148484'},
+    ticks: {color: 'white'},
+    grid: {color: 'white'},
       stack: 'demo'
   },
   y3: {
@@ -165,8 +170,8 @@ displayFormats: {
       stack: 'demo'
   },
   y4: {
-    ticks: {color: '#148484'},
-    grid: {color: '#148484'},
+    ticks: {color: 'white'},
+    grid: {color: 'white'},
       stack: 'demo'
   },
 },
@@ -250,23 +255,28 @@ function toggleData(value){
   const visibilityData = myChart.isDatasetVisible(value);
   if(visibilityData === true){
     myChart.hide(value);
+    document.getElementById(value).style.backgroundColor = 'black';
   }
   if(visibilityData === false){
     myChart.show(value);
+    document.getElementById(value).style.backgroundColor = myChart.data.datasets[value].backgroundColor;
   }
 }
 
-document.getElementById('0').style.backgroundColor = myChart.data.datasets[0].backgroundColor;
+
+
+
+document.getElementById('0').style.backgroundColor = 'black';
 document.getElementById('0').innerText = myChart.data.datasets[0].label;
 
-document.getElementById('1').style.backgroundColor = myChart.data.datasets[1].backgroundColor;
+document.getElementById('1').style.backgroundColor = 'black';
 document.getElementById('1').innerText = myChart.data.datasets[1].label;
 
-document.getElementById('2').style.backgroundColor = myChart.data.datasets[2].backgroundColor;
+document.getElementById('2').style.backgroundColor = 'black';
 document.getElementById('2').innerText = myChart.data.datasets[2].label;
 
-document.getElementById('3').style.backgroundColor = myChart.data.datasets[3].backgroundColor;
+document.getElementById('3').style.backgroundColor = 'black';
 document.getElementById('3').innerText = myChart.data.datasets[3].label;
 
-document.getElementById('4').style.backgroundColor = myChart.data.datasets[4].backgroundColor;
+document.getElementById('4').style.backgroundColor = 'black';
 document.getElementById('4').innerText = myChart.data.datasets[4].label;

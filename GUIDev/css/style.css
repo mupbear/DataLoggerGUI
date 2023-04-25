@@ -69,12 +69,25 @@ body {
     margin: 0 auto; /* center the container horizontally */padding: 5px;
     border-radius: 10px;
     border: solid 3px #FFFFFF;
-    background: #81C8BD;
+    background-color: #81C8BD;
+    background: repeating-linear-gradient(
+    to top,
+    #148484 0px,
+    #148484 27%,
+    #81C8BD 27%,
+    #81C8BD 50%,
+    #148484 50%,
+    #148484 72.7%,
+    #81C8BD 72.7%,
+    #81C8BD  
+  );
+    
   }
   .dataGraph {
     margin-left: 20px;
     height: 100%;
     width: 100%;
+    
   }
 
   .dataRecent{
