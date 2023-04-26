@@ -12,7 +12,7 @@ authors = [
 
 dependencies = [
   "litestar",
-  "uvicorn",
+  "uvicorn[standard]",
   "litestar[jinja]",
   "aiomysql"
 ]

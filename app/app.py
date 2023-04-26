@@ -20,8 +20,8 @@ async def before_startup_handler(app_instance: Litestar) -> None:
 
 async def before_shutdown_handler(app_instance: Litestar) -> None:
   logger.info("Disconnecting from MySQL database...")
-  app_instance.pool.close()
-  await app_instance.pool.wait_closed()
+  app_instance.state.pool.close()
+  await app_instance.state.pool.wait_closed()
   logger.info("Disconnecting from MySQL database FINISHED")
 
 @get("/", media_type=MediaType.HTML, cache=False)
