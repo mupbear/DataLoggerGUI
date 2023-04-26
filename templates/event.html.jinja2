@@ -23,16 +23,17 @@
     keep_running = false;
   }
 
-  async function RetrieveNewData() {
-    const response = await fetch("", {
+  async function RetrieveNewData() 
+  {
+    const response = await fetch('', {
       method: "POST",
       headers: {
         "Accept": "application/json",
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        "minimum_id": highest_retrieved_data_id
-      })
+        "minimum_id": 0
+      }),
     });
     
     const json_data = await response.json();

@@ -28,8 +28,8 @@ async def before_startup_handler(app_instance: Litestar) -> None:
   async with aiofiles.open("./static/json/event.json", mode='r') as event_file:
     app_instance.state.event_data = json.loads(await event_file.read())
     assert(app_instance.state.event_data.keys() & {"car", "minimum_timestamp", "maximum_timestamp", "sensors"})
-    app_instance.state.event_sensors = tuple(app_instance.state.event_data["sensors"])
-
+    app_instance.state.event_sensors = tuple(sensor_data["id"] for sensor_data in app_instance.state.event_data["sensors"].values())
+    
 async def before_shutdown_handler(app_instance: Litestar) -> None:
   logger.info("Disconnecting from MySQL database...")
   app_instance.state.pool.close()
@@ -50,23 +50,37 @@ async def get_event() -> Template:
   )
 
 @post("/event", media_type=MediaType.JSON)
-async def post_event(state: ImmutableState, data: dict[str, str]) -> dict[str, str]:
+async def post_event(state: State, data: dict[str, str]) -> dict[str, str]:
   assert("minimum_id" in data)
   
-  async with pool.acquire() as conn:
+  query_results = None
+  async with state.pool.acquire() as conn:
     cur = await conn.cursor()
-    await cur.execute(QUERY_SELECT_FILTERED_RAW_DATA, (
-      data["minimum_id"],
-      app_instance.state.event_data["car"],
-      app_instance.state.event_data["minimum_timestamp"],
-      app_instance.state.event_data["maximum_timestamp"],
-      app_instance.state.event_sensors,
+    await cur.execute("""SELECT * FROM raw_data WHERE ID > %s AND CarName = %s AND Time >= %s AND Time <= %s AND Base_ID in %s ORDER BY ID DESC;""", 
+      (data["minimum_id"],
+      state.event_data["car"],
+      state.event_data["minimum_timestamp"],
+      state.event_data["maximum_timestamp"],
+      state.event_sensors
       )
     )
-    results = await cur.fetchall()     
-    logger.info(results)
+    query_results = await cur.fetchall()
   
-  return {"test", "test", "test"}
+  data_by_can_id = {} 
+  for selected_data in query_results:
+    id = selected_data[0]
+    can_id = selected_data[1]
+    value = selected_data[2]
+    timestamp = selected_data[3]
+    
+    if can_id in data_by_can_id:
+      data_by_can_id[can_id].append((id, value, timestamp))
+    else:
+      data_by_can_id[can_id] = [(id, value, timestamp)]
+              
+  logger.info(data_by_can_id)
+      
+  return data
 
 app = Litestar(
   before_startup=[before_startup_handler],
