@@ -36,7 +36,7 @@
 			"maximum_value": 127.0,
 			"multiplier": 1.0,
 			"offset": 0.0,
-			"unit": "C"
+			"unit": "°C"
 		},
 
 		"MAP": {
@@ -60,7 +60,7 @@
 			"maximum_value": 50.0,
 			"multiplier": 0.016129,
 			"offset": 0.0,
-			"unit": "Ms"
+			"unit": "ms"
 		},
 
 		"AIN1": {
@@ -144,7 +144,7 @@
 			"maximum_value": 250.0,
 			"multiplier": 1.0,
 			"offset": 0.0,
-			"unit": "C"
+			"unit": "°C"
 		},
 
 		"IGNANG": {
@@ -216,7 +216,7 @@
 			"maximum_value": 120.0,
 			"multiplier": 1.0,
 			"offset": 0.0,
-			"unit": "C"
+			"unit": "°C"
 		},
 
 		"BATT": {
