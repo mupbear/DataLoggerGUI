@@ -11,6 +11,7 @@ authors = [
 ]
 
 dependencies = [
+  "aiofiles",
   "litestar",
   "uvicorn[standard]",
   "litestar[jinja]",

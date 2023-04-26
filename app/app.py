@@ -1,3 +1,5 @@
+from app.lib.mysql_queries import QUERY_SELECT_FILTERED_RAW_DATA
+
 from litestar import Litestar, MediaType, get, post
 from litestar.datastructures import State, ImmutableState
 from litestar.logging.config import LoggingConfig
@@ -7,7 +9,9 @@ from litestar.response_containers import Template
 from litestar.template.config import TemplateConfig
 import logging
 import aiomysql
+import aiofiles
 
+import json
 from pathlib import Path
 
 logger = logging.getLogger("web-server-racing-data-analysis")
@@ -19,12 +23,17 @@ async def before_startup_handler(app_instance: Litestar) -> None:
     user="regtersc_webserver", password="BroodjeKaas",
     db="regtersc_data_test"
   )
+  
+  logger.info("Loading current event...")
+  event_file_path = Path(app_instance.url_for_static_asset("static", "json/event.json"))
+  async with aiofiles.open(event_file_path, mode='r') as event_file:
+    app_instance.state.event_data = json.load(await event_file.read())
+    
 
 async def before_shutdown_handler(app_instance: Litestar) -> None:
   logger.info("Disconnecting from MySQL database...")
   app_instance.state.pool.close()
   await app_instance.state.pool.wait_closed()
-  logger.info("Disconnecting from MySQL database FINISHED")
 
 @get("/", media_type=MediaType.HTML, cache=False)
 async def get_root() -> Template:
@@ -41,8 +50,14 @@ async def get_event() -> Template:
   )
 
 @post("/event", media_type=MediaType.JSON)
-def post_event(state: ImmutableState, data: dict[str, str]) -> dict[str, str]:
-  print(data)
+async def post_event(state: ImmutableState, data: dict[str, str]) -> dict[str, str]:
+  assert("minimum_id" in data)
+  
+  async with pool.acquire() as conn:
+        cur = await conn.cursor()
+        await cur.execute(QUERY_SELECT_FILTERED_RAW_DATA, )
+        
+        
   return data
 
 app = Litestar(
