@@ -25,10 +25,10 @@ async def before_startup_handler(app_instance: Litestar) -> None:
   )
   
   logger.info("Loading current event...")
-  event_file_path = Path(app_instance.url_for_static_asset("static", "json/event.json"))
-  async with aiofiles.open(event_file_path, mode='r') as event_file:
-    app_instance.state.event_data = json.load(await event_file.read())
-    
+  async with aiofiles.open("./static/json/event.json", mode='r') as event_file:
+    app_instance.state.event_data = json.loads(await event_file.read())
+    assert(app_instance.state.event_data.keys() & {"car", "minimum_timestamp", "maximum_timestamp", "sensors"})
+    app_instance.state.event_sensors = tuple(app_instance.state.event_data["sensors"])
 
 async def before_shutdown_handler(app_instance: Litestar) -> None:
   logger.info("Disconnecting from MySQL database...")
@@ -54,11 +54,19 @@ async def post_event(state: ImmutableState, data: dict[str, str]) -> dict[str, s
   assert("minimum_id" in data)
   
   async with pool.acquire() as conn:
-        cur = await conn.cursor()
-        await cur.execute(QUERY_SELECT_FILTERED_RAW_DATA, )
-        
-        
-  return data
+    cur = await conn.cursor()
+    await cur.execute(QUERY_SELECT_FILTERED_RAW_DATA, (
+      data["minimum_id"],
+      app_instance.state.event_data["car"],
+      app_instance.state.event_data["minimum_timestamp"],
+      app_instance.state.event_data["maximum_timestamp"],
+      app_instance.state.event_sensors,
+      )
+    )
+    results = await cur.fetchall()     
+    logger.info(results)
+  
+  return {"test", "test", "test"}
 
 app = Litestar(
   before_startup=[before_startup_handler],

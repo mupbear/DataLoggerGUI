@@ -2,12 +2,6 @@
 {% set active_page = "event" %}
 
 {% block main %}
-<label for="fname">Car name:</label>
-<input type="text" id="car" name="car"><br><br>
-<label for="lname">Minimum timestamp:</label>
-<input type="text" id="minimum_timestamp" name="minimum_timestamp"><br><br>
-<label for="lname">Maximum timestamp:</label>
-<input type="text" id="maximum_timestamp" name="maximum_timestamp"><br><br>
 <button onclick="StartRetrievingData();">Start retrieving data</button>
 <button onclick="StopRetrievingData();">Stop retrieving data</button>
 {% endblock main %}
@@ -16,17 +10,10 @@
 <script>
   let keep_running = false;
 
-  let user_input_car;
-  let user_input_minimum_timestamp;
-  let user_input_maximum_timestamp;
   let highest_retrieved_data_id = 0;
 
   function StartRetrievingData()
-  {
-    user_input_car = document.getElementById("car").value;
-    user_input_minimum_timestamp = document.getElementById("minimum_timestamp").value;
-    user_input_maximum_timestamp = document.getElementById("maximum_timestamp").value;
-    
+  {    
     keep_running = true;
     RetrieveNewData();
   }
@@ -44,11 +31,8 @@
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-         "minimum_id": highest_retrieved_data_id,
-         "car": user_input_car,
-         "minimum_timestamp": user_input_minimum_timestamp,
-         "maximum_timestamp": user_input_maximum_timestamp
-      }),
+        "minimum_id": highest_retrieved_data_id
+      })
     });
     
     const json_data = await response.json();
