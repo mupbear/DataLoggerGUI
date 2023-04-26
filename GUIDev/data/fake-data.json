@@ -1,5 +1,5 @@
 [  
- {    "value": "Empty",    "label": "None Selected", "data":{"datasets":[]}  },
+ {    "value": "Empty",    "label": "None Selected"},
  {
   "value": "percentage",
   "label": "Percentage (%)",

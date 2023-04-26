@@ -113,19 +113,33 @@ var ctx = document.getElementById('myChart').getContext('2d');
     });
 
 
+    function getRandomColor() {
+      const letters = '0123456789ABCDEF';
+      let color = '#';
+      for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    }
+    
+
+
 function updateGraph(selectID) {
     var selectBox = document.getElementById(selectID);
     var selectedValue = selectBox.options[selectBox.selectedIndex].value;
     
+
+    if(selectedValue === 'Empty'){
     myChart.data.datasets = myChart.data.datasets.filter(dataset => {
       return dataset.yAxisID !== selectID;
     });
+    myChart.update();
+  }else{
 
-
+    myChart.data.datasets = myChart.data.datasets.filter(dataset => {
+      return dataset.yAxisID !== selectID;
+    });
     var dataLength = myChart.data.datasets.length;
-
-    
-
     $.getJSON('data/fake-data.json', function(data) {
         var selectedData = data.find(function(item) {
             return item.value === selectedValue;
@@ -134,8 +148,12 @@ function updateGraph(selectID) {
         if (selectedData) {
           
           for(var i = 0; i<selectedData.data.datasets.length; i++){
+            var color = getRandomColor();
             myChart.data.datasets[dataLength+i] = selectedData.data.datasets[i];
             myChart.data.datasets[dataLength+i].yAxisID = selectID;
+            myChart.data.datasets[dataLength+i].backgroundColor = color;
+            myChart.data.datasets[dataLength+i].borderColor = color;
+
             document.getElementById('0').innerText = myChart.data.datasets[i].label;
           }
          // myChart.data.datasets[4] = selectedData.data.datasets[0];
@@ -148,6 +166,8 @@ function updateGraph(selectID) {
             myChart.update();
         }
     })
+  }
+
 };
 
 // Load JSON file
@@ -216,6 +236,7 @@ function toggleData(value){
 
 
 
+/*
 document.getElementById('0').style.backgroundColor = 'black';
 document.getElementById('0').innerText = myChart.data.datasets[0].label;
 
@@ -230,3 +251,4 @@ document.getElementById('3').innerText = myChart.data.datasets[3].label;
 
 document.getElementById('4').style.backgroundColor = 'black';
 document.getElementById('4').innerText = myChart.data.datasets[4].label;
+*/
