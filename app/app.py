@@ -1,4 +1,5 @@
 from litestar import Litestar, MediaType, get, post
+from litestar.datastructures import State, ImmutableState
 from litestar.logging.config import LoggingConfig
 from litestar.static_files.config import StaticFilesConfig
 from litestar.contrib.jinja import JinjaTemplateEngine
@@ -14,8 +15,9 @@ logger = logging.getLogger("web-server-racing-data-analysis")
 async def before_startup_handler(app_instance: Litestar) -> None:
   logger.info("Connecting to MySQL database...")
   app_instance.state.pool = await aiomysql.create_pool(
-    host='162.241.244.103', port=3306, 
-    user='regtersc_Joost', password='BroodjeKaas'
+    host="162.241.244.103", port=3306, 
+    user="regtersc_webserver", password="BroodjeKaas",
+    db="regtersc_data_test"
   )
 
 async def before_shutdown_handler(app_instance: Litestar) -> None:
@@ -39,7 +41,7 @@ async def get_event() -> Template:
   )
 
 @post("/event", media_type=MediaType.JSON)
-def post_event(data: dict[str, str]) -> dict[str, str]:
+def post_event(state: ImmutableState, data: dict[str, str]) -> dict[str, str]:
   print(data)
   return data
 
