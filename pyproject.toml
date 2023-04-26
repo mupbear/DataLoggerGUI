@@ -11,7 +11,6 @@ authors = [
 ]
 
 dependencies = [
-  "picologging",
   "litestar",
   "uvicorn",
   "litestar[jinja]",

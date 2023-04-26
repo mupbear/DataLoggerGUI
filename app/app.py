@@ -4,8 +4,14 @@ from litestar.static_files.config import StaticFilesConfig
 from litestar.contrib.jinja import JinjaTemplateEngine
 from litestar.response_containers import Template
 from litestar.template.config import TemplateConfig
+import logging
 
 from pathlib import Path
+
+logger = logging.getLogger("web-server-racing-data-analysis")
+
+async def before_startup_handler(app_instance: Litestar) -> None:
+    logger.debug("hello world")
 
 @get("/", media_type=MediaType.HTML, cache=False)
 async def get_root() -> Template:
@@ -27,6 +33,7 @@ def post_event(data: dict[str, str]) -> dict[str, str]:
   return data
 
 app = Litestar(
+    before_startup=[before_startup_handler],
     route_handlers=[get_root, get_event, post_event],
     template_config=TemplateConfig(
         directory=Path("templates"),
@@ -38,7 +45,9 @@ app = Litestar(
     logging_config=LoggingConfig(
       loggers={
           "web-server-racing-data-analysis": {
-              "level": "INFO",
+              "propagate": False,
+              "formatters": {"standard": {"format": "%(levelname)s - %(asctime)s.%(msecs)06f - %(name)s - %(module)s - %(message)s", "datefmt": "%Y-%m-%d %H:%M:%S"}},
+              "level": "DEBUG",
               "handlers": ["queue_listener"],
           }
       }
