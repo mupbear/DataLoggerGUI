@@ -1,4 +1,5 @@
 from litestar import Litestar, MediaType, get, post
+from litestar.logging.config import LoggingConfig
 from litestar.static_files.config import StaticFilesConfig
 from litestar.contrib.jinja import JinjaTemplateEngine
 from litestar.response_containers import Template
@@ -34,4 +35,12 @@ app = Litestar(
     static_files_config=[
         StaticFilesConfig(directories=[Path("static")], path="/static", name="static")
     ],
+    logging_config=LoggingConfig(
+      loggers={
+          "web-server-racing-data-analysis": {
+              "level": "INFO",
+              "handlers": ["queue_listener"],
+          }
+      }
+    )
 )

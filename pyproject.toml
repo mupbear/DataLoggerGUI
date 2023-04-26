@@ -5,23 +5,23 @@ description = "A web server that features a GUI for racing data analysis."
 readme = "README.md"
 requires-python = ">=3.11"
 authors = [
-    { name = "Dana Groner" },
-    { name = "Jan Sevrin" },
-    { name = "Joost Asbreuk" }
+  { name = "Dana Groner" },
+  { name = "Jan Sevrin" },
+  { name = "Joost Asbreuk" }
 ]
 
 dependencies = [
-    "pydantic",
-    "litestar",
-    "uvicorn",
-    "litestar[jinja]",
-    "asyncmy"
+  "picologging",
+  "litestar",
+  "uvicorn",
+  "litestar[jinja]",
+  "asyncmy"
 ]
 
 [project.optional-dependencies]
 dev = [
-    "pytest",
-    "pytest-asyncio"
+  "pytest",
+  "pytest-asyncio"
 ]
 
 [tool.setuptools.packages.find]
