@@ -15,7 +15,7 @@ dependencies = [
   "litestar",
   "uvicorn",
   "litestar[jinja]",
-  "asyncmy"
+  "aiomysql"
 ]
 
 [project.optional-dependencies]
