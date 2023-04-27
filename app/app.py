@@ -1,20 +1,20 @@
-from app.lib.mysql_queries import QUERY_SELECT_FILTERED_RAW_DATA
+from app.lib.event_data_streamer import EventDataStreamer
 
 from litestar import Litestar, MediaType, get, post
 from litestar.datastructures import State, ImmutableState
 from litestar.logging.config import LoggingConfig
 from litestar.static_files.config import StaticFilesConfig
 from litestar.contrib.jinja import JinjaTemplateEngine
-from litestar.response_containers import Template
+from litestar.response_containers import Template, Stream
 from litestar.template.config import TemplateConfig
-import logging
 import aiomysql
 import aiofiles
 
 import json
 from pathlib import Path
+import logging
 
-logger = logging.getLogger("web-server-racing-data-analysis")
+logger = logging.getLogger("app")
 
 async def before_startup_handler(app_instance: Litestar) -> None:
   logger.info("Connecting to MySQL database...")
@@ -50,37 +50,15 @@ async def get_event() -> Template:
   )
 
 @post("/event", media_type=MediaType.JSON)
-async def post_event(state: State, data: dict[str, str]) -> dict[str, str]:
-  assert("minimum_id" in data)
-  
-  query_results = None
-  async with state.pool.acquire() as conn:
-    cur = await conn.cursor()
-    await cur.execute("""SELECT * FROM raw_data WHERE ID > %s AND CarName = %s AND Time >= %s AND Time <= %s AND Base_ID in %s ORDER BY ID DESC;""", 
-      (data["minimum_id"],
-      state.event_data["car"],
-      state.event_data["minimum_timestamp"],
-      state.event_data["maximum_timestamp"],
-      state.event_sensors
-      )
-    )
-    query_results = await cur.fetchall()
-  
-  data_by_can_id = {} 
-  for selected_data in query_results:
-    id = selected_data[0]
-    can_id = selected_data[1]
-    value = selected_data[2]
-    timestamp = selected_data[3]
-    
-    if can_id in data_by_can_id:
-      data_by_can_id[can_id].append((id, value, timestamp))
-    else:
-      data_by_can_id[can_id] = [(id, value, timestamp)]
-              
-  logger.info(data_by_can_id)
-      
-  return data
+async def post_event(state: State, data: dict[str, str]) -> Stream:
+  event_data_streamer = EventDataStreamer(
+    pool=state.pool,
+    car_name=state.event_data["car_name"],
+    minimum_timestamp=state.event_data["minimum_timestamp"],
+    maximum_timestamp=state.event_data["maximum_timestamp"],
+    event_sensors=state.event_sensors
+  )
+  return Stream(iterator=event_data_streamer)
 
 app = Litestar(
   before_startup=[before_startup_handler],
@@ -95,7 +73,7 @@ app = Litestar(
   ],
   logging_config=LoggingConfig(
     loggers={
-      "web-server-racing-data-analysis": {
+      "app": {
           "propagate": False,
           "level": "INFO",
           "handlers": ["queue_listener"],

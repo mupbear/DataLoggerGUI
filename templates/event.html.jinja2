@@ -10,8 +10,6 @@
 <script>
   let keep_running = false;
 
-  let highest_retrieved_data_id = 0;
-
   function StartRetrievingData()
   {    
     keep_running = true;
@@ -31,18 +29,22 @@
         "Accept": "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        "minimum_id": 0
-      }),
+      body: JSON.stringify({}),
     });
-    
-    const json_data = await response.json();
-    console.log(json_data);
-    
-    highest_retrieved_data_id += 1;
-    
-    if (keep_running) {
-      setTimeout( RetrieveNewData, 5000 );
+
+    const reader = response.body.getReader();
+    while (true) 
+    {
+      const { done, value } = await reader.read();
+      if (value)
+      {
+        console.log(value);
+      }
+
+      if (done || !keep_running) 
+      {
+        return;
+      }
     }
   }
 </script>
