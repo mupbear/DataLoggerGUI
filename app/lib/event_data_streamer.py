@@ -55,26 +55,13 @@ class EventDataStreamer:
     
     output = {}
     for row in rows:
-      # Process rows of data here into the desirable JSON output
-      # Probably should create a function within the class that takes input
-      
-      # Here below some example code of what value is what
-      # row_id = row[0]
-      # can_id = row[1]
-      # value = row[2]
-      # timestamp = row[3]
-      
-      
-      
-      # if can_id in row_by_can_id:
-      #   row_by_can_id[can_id].append((row_id, value, timestamp))
-      # else:
-      #   row_by_can_id[can_id] = [(row_id, value, timestamp)]
-    
-    # Return your JSON output here
-    return {"1": "abc"}
+      sensor_values = self._process_can_data_to_sensor_values(row)
+      # Process sensor values here into the desirable JSON output      
 
-def _process_can_data_to_sensor_values(self, can_data: tuple[any, ...]) -> dict[str, any]:
+    # Return your desirable JSON output here 
+    return output
+
+def _process_can_data_to_sensor_values(self, row: tuple[any, ...]) -> dict[str, any]:
   # row_id = row[0]
   can_id: str = str(row[1])
   cvalue: ctypes.c_uint64 = ctypes.c_uint64(row[2])
@@ -84,19 +71,16 @@ def _process_can_data_to_sensor_values(self, can_data: tuple[any, ...]) -> dict[
   if can_id_str in self._event_config.sensor_config:
     configs: list[dict[str, any]] = self._event_config.sensor_config[can_id]
     for config in configs:
-      bit_offset: int = config["byte_offset"] * 8
-      bit_width: int = config["byte_width"] * 8
+      bit_offset: int = config["byte_offset"] * 8 # should probably just change byte_offset to bit_offset in the event_config.json
+      bit_width: int = config["byte_width"] * 8 # should probably just change byte_width to bit_width in the event_config.json
       signed: bool = config["signed"]
       
       shift_right_n: int = 64 - bit_width + bit_offset
       sensor_value: int = (cvalue.value << bit_offset) >> shift_right_n
-      # implement here shit like signed or unsigned, then multiply by multiplier and add offset
+      # implement here shit like signed or unsigned, then multiply by multiplier and add offset, assert value between minimum and maximum
+      # insert that stuff into output with the correct
       
-      
-      
-      
-      
-  return output
+  return output # return all the sensors acquired from one row of data here, mayble something like {"Sensor name here.": {"unit": "Unit here.", "value": "Value here."}, ...}
       
     
   
