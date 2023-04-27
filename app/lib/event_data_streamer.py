@@ -61,5 +61,4 @@ class EventDataStreamer:
         row_by_can_id[can_id] = [(row_id, value, timestamp)]
     logger.info(row_by_can_id)
     
-    return {} 
-    
+    return {}
