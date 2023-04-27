@@ -38,7 +38,9 @@
       const { done, value } = await reader.read();
       if (value)
       {
-        console.log(value);
+        const decoded_data = new TextDecoder().decode(value);
+        const parsed_data = JSON.parse(decoded_data)
+        console.log(parsed_data)
       }
 
       if (done || !keep_running) 

@@ -52,7 +52,8 @@ async def get_event() -> Template:
 
 @post("/event", media_type=MediaType.JSON)
 async def post_event(state: State, data: dict[str, str]) -> Stream:
-  return Stream(iterator=EventDataStreamer(pool=state.pool, event_config=state.event_config))
+  event_data_streamer = EventDataStreamer(pool=state.pool, event_config=state.event_config)
+  return Stream(iterator=event_data_streamer)
 
 app = Litestar(
   before_startup=[before_startup_handler],
