@@ -9,13 +9,20 @@ import logging
 
 logger = logging.getLogger("app")
 
+class EventConfig:
+  def __init__(self, event_config):
+    # assert(event_config & {"car", "minimum_timestamp", "maximum_timestamp", "sensors"})
+    self.car_name = event_config["car_name"]
+    self.minimum_timestamp = event_config["minimum_timestamp"]
+    self.maximum_timestamp = event_config["maximum_timestamp"]
+    self.can_ids = list(event_config["sensors"])
+    self.sensor_config_by_can_id = event_config["sensors"]
+    
+
 class EventDataStreamer:
-  def __init__(self, pool: aiomysql.Pool, car_name: str, minimum_timestamp: str, maximum_timestamp: str, event_sensors: tuple[int, ...]):
+  def __init__(self, pool: aiomysql.Pool, event_config: EventConfig):
     self._pool = pool
-    self._car_name = car_name
-    self._minimum_timestamp = minimum_timestamp
-    self._maximum_timestamp = maximum_timestamp
-    self._event_sensors = event_sensors
+    self._event_config = event_config
     
     self._maximum_retrieved_id: int = 0
     
@@ -34,10 +41,10 @@ class EventDataStreamer:
       await cur.execute(
         QUERY_SELECT_FILTERED_RAW_DATA, 
         (self._maximum_retrieved_id,
-          state.event_data["car"],
-          state.event_data["minimum_timestamp"],
-          state.event_data["maximum_timestamp"],
-          state.event_sensors)
+          self._event_config.car_name,
+          self._event_config.minimum_timestamp,
+          self._event_config.maximum_timestamp,
+          self._event_config.can_ids)
       )
       
       return await cur.fetchall()
