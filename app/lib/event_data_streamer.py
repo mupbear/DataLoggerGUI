@@ -55,19 +55,19 @@ class EventDataStreamer:
     
     output = {}
     for row in rows:
-      sensor_values = self._process_can_data_to_sensor_values(row)
+      sensor_values = self._process_can_data_to_sensor_values_and_timestamp(row)
       # Process sensor values here into the desirable JSON output      
 
     # Return your desirable JSON output here 
     return output
 
-def _process_can_data_to_sensor_values(self, row: tuple[any, ...]) -> dict[str, any]:
+def _process_can_data_to_sensor_values_and_timestamp(self, row: tuple[any, ...]) -> tuple[dict[str, tuple[str, str]], str]:
   # row_id = row[0]
   can_id: str = str(row[1])
   cvalue: ctypes.c_uint64 = ctypes.c_uint64(row[2])
   timestamp: str = row[3]
   
-  output = {}
+  value_and_unit_by_sensor_name: dict[str, tuple[str, str]] = {}
   if can_id_str in self._event_config.sensor_config:
     configs: list[dict[str, any]] = self._event_config.sensor_config[can_id]
     for config in configs:
@@ -75,12 +75,18 @@ def _process_can_data_to_sensor_values(self, row: tuple[any, ...]) -> dict[str, 
       bit_width: int = config["byte_width"] * 8 # should probably just change byte_width to bit_width in the event_config.json
       signed: bool = config["signed"]
       
-      shift_right_n: int = 64 - bit_width + bit_offset
-      sensor_value: int = (cvalue.value << bit_offset) >> shift_right_n
-      # implement here shit like signed or unsigned, then multiply by multiplier and add offset, assert value between minimum and maximum
-      # insert that stuff into output with the correct
+      shift_right_n: int = 64 - bit_width - bit_offset # 64 because we first cast the number to 64-bit ctypes.c_uint64
+      sensor_value: int = (cvalue.value >> shift_right_n) & (2**bit_width - 1)
+      sensor_value = int.from_bytes((sensor_value.to_bytes()), byteorder='big', signed=signed)
+      sensor_value = sensor_value * config["multiplier"] + config["offset"]
       
-  return output # return all the sensors acquired from one row of data here, mayble something like {"Sensor name here.": {"unit": "Unit here.", "value": "Value here."}, ...}
+      if sensor_value < config["minimum_value"] or sensor_value > config["maximum_value"]:
+        logger.error(f"Sensor config: {config} produced out of bounds sensor value: {sensor_value} from original CAN value: {cvalue.value}")
+
+      else:
+        value_and_unit_by_sensor_name[config["sensor_name"]] = (sensor_value, config["unit"])
+      
+  return (value_and_unit_by_sensor_name, timestamp)
       
     
   
