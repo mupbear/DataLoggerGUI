@@ -34,7 +34,7 @@ class EventDataStreamer:
     await sleep(1)
     rows = await self._select_rows()
     result = self._process_rows(rows) if rows else {}
-    #result = { "sensor1": { "value": 50, "unit": "km/h"},"sensor2": {"value": 20,"unit": "deg C"}}
+    #logger.info({encode_json(result)})
     return encode_json(result)
     
   async def _select_rows(self) -> list[tuple[any, ...]]:
@@ -58,11 +58,15 @@ class EventDataStreamer:
     for row in rows:
       sensor_values, timestamp = self._process_can_data_to_sensor_values_and_timestamp(row)
       # Process sensor values here into the desirable JSON output     
-      for sensor_name, (value, unit) in sensor_values.items():
-            if sensor_name not in output:
-                output[sensor_name] = []
-            output[sensor_name].append({"value": value, "unit": unit, "timestamp": timestamp}) 
+      for sensor_unit, (value, sensor_name) in sensor_values.items():
+            if sensor_unit not in output:
+                output[sensor_unit] = {}
 
+            if sensor_name not in output[sensor_unit]:
+                output[sensor_unit][sensor_name] = []  
+
+            output[sensor_unit][sensor_name].append({"timestamp": timestamp, "value": value}) 
+    
     # Return your desirable JSON output here 
     return output
 
@@ -85,11 +89,11 @@ class EventDataStreamer:
         sensor_value = int.from_bytes((sensor_value.to_bytes(4, byteorder='big', signed=signed)), byteorder='big', signed=signed)
         sensor_value = sensor_value * config["multiplier"] + config["offset"]
         
-        if sensor_value < config["minimum_value"] or sensor_value > config["maximum_value"]:
-          logger.error(f"Sensor config: {config} produced out of bounds sensor value: {sensor_value} from original CAN value: {cvalue.value}")
+        #if sensor_value < config["minimum_value"] or sensor_value > config["maximum_value"]:
+          #logger.error(f"Sensor config: {config} produced out of bounds sensor value: {sensor_value} from original CAN value: {cvalue.value}")
 
-        else:
-          value_and_unit_by_sensor_name[config["sensor_name"]] = (sensor_value, config["unit"])
+        #else:
+        value_and_unit_by_sensor_name[config["unit"]] = (sensor_value, config["sensor_name"])
         
     return (value_and_unit_by_sensor_name, timestamp)
     
