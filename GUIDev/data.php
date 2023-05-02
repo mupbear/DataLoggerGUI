@@ -28,7 +28,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
 	<input type="checkbox" id="dark-mode-checkbox" style="position: fixed; top: 20px; right: 20px; z-index: 1;"><label for="dark-mode-checkbox" style="position: fixed; top: 20px; right: 40px;">Dark mode:</label>
 	<form method="POST" action="home.php"><button> Home </button></form> 
 	<form method="POST" action="admin/admin.php"><button> Admin </button></form>
-	<form method="POST" action="gps.php"><button> Map </button></form>
+	<form method="POST" action="gps/gps.php"><button> Map </button></form>
 </div>
 
 <div class="liveDataTop">
