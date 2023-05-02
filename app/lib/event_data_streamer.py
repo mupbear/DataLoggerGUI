@@ -34,7 +34,7 @@ class EventDataStreamer:
     await sleep(1)
     rows = await self._select_rows()
     result = self._process_rows(rows) if rows else {}
-    #logger.info({encode_json(result)})
+    #logger.info({rows})
     return encode_json(result)
     
   async def _select_rows(self) -> list[tuple[any, ...]]:
@@ -48,8 +48,7 @@ class EventDataStreamer:
           self._event_config.maximum_timestamp,
           self._event_config.can_ids)
       )
-      
-      return await cur.fetchall()
+    return await cur.fetchall()
     
   def _process_rows(self, rows: list[tuple[any, ...]]) -> dict[str, str]:
     self._maximum_retrieved_id = rows[0][0]
@@ -59,13 +58,14 @@ class EventDataStreamer:
       sensor_values, timestamp = self._process_can_data_to_sensor_values_and_timestamp(row)
       # Process sensor values here into the desirable JSON output     
       for sensor_unit, (value, sensor_name) in sensor_values.items():
-            if sensor_unit not in output:
-                output[sensor_unit] = {}
+      
+          if sensor_unit not in output:
+                output[sensor_unit] = {"value": sensor_unit}
 
-            if sensor_name not in output[sensor_unit]:
-                output[sensor_unit][sensor_name] = []  
+          if sensor_name not in output[sensor_unit]:
+                output[sensor_unit][sensor_name] = {"value": sensor_unit, "label": sensor_unit, "data": []}  
 
-            output[sensor_unit][sensor_name].append({"timestamp": timestamp, "value": value}) 
+          output[sensor_unit][sensor_name]["data"].append({"timestamp": timestamp, "value": value}) 
     
     # Return your desirable JSON output here 
     return output
@@ -96,5 +96,6 @@ class EventDataStreamer:
         value_and_unit_by_sensor_name[config["unit"]] = (sensor_value, config["sensor_name"])
         
     return (value_and_unit_by_sensor_name, timestamp)
+    
     
     
