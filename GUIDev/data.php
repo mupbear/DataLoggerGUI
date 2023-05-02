@@ -66,7 +66,18 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
 <br>
 <div id="chartDiv" class="dataContainer">
 	<div class="dataRecent">
-		<label>Live data</label>
+		<div id="dataY4" class="dataLive">
+		<label>Y4</label>
+		</div>
+		<div id="dataY3" class="dataLive">
+		<label>Y3</label>
+		</div>
+		<div id="dataY2" class="dataLive">
+		<label>Y2</label>
+		</div>
+		<div id="dataY1" class="dataLive">
+		<label>Y1</label>
+		</div>
 	</div>	
 	<div class="dataGraph">
 		<canvas id="myChart" ></canvas>

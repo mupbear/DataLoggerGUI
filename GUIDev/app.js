@@ -454,7 +454,9 @@ function updateGraph(selectID) {
 
             myChart.data.datasets.push(newDataset);
             //console.log(myChart.data.datasets.length-1);
-  
+
+            var mostRecent = newDataset.data[newDataset.data.length-1];
+            console.log(mostRecent);
             
           }); 
              

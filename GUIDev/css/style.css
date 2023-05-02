@@ -91,6 +91,12 @@ body {
   }
 
   .dataRecent{
-    width: 200px;
-    border: solid 3px #FFFFFF;
+    margin-top: 20px;
+  }
+
+  .dataLive {
+    padding: 5px;
+    align-items: center; /* vertically center the buttons */
+    text-align: center;
+    height: 24%;
   }
