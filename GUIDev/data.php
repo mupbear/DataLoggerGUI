@@ -32,8 +32,12 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
 </div>
 
 <div class="liveDataTop">
-	<label>Live Data</label><br>
-	<label>FuelLevel,OilT,OilP,CLT,"DiffOil"</label>
+	<label>FuelLevel,OilT,OilP,CLT,"DiffOil"</label><br>
+	<label>OilT:</label>
+	<label id="dataOILT"></label>
+	<br>
+	<label>CLT:</label>
+	<label id="dataCLT"></label>
 </div>	
 <br>
 <div class="userContainer">
