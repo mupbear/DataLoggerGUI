@@ -10,37 +10,70 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
 <html>
 <head>
 	<title>Data</title>
+
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="dark-mode.css">
+	<script src="https://unpkg.com/chart.js-plugin-labels-dv/dist/chartjs-plugin-labels.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+
+
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/dark-mode.css" media="(prefers-color-scheme: dark)">
 
 </head>
 <body>
 
+
+<div class="topButtons">
+	<input type="checkbox" id="dark-mode-checkbox" style="position: fixed; top: 20px; right: 20px; z-index: 1;"><label for="dark-mode-checkbox" style="position: fixed; top: 20px; right: 40px;">Dark mode:</label>
+	<form method="POST" action="home.php"><button> Home </button></form> 
+	<form method="POST" action="admin/admin.php"><button> Admin </button></form>
+	<form method="POST" action="gps.php"><button> Map </button></form>
+</div>
+
+<div class="liveDataTop">
+	<label>Live Data</label><br>
+	<label>FuelLevel,OilT,OilP,CLT,"DiffOil"</label>
+</div>	
 <br>
-	<!-- First chart -->
-	<label for="select-chart1">Select Chart 1:</label> 
-	<select id="select-chart1" onchange="updateChart(myChart1, 'select-chart1')"></select> <button onclick="addDropdown()">Add Dataset</button><label for="select1">Select Dataset:</label>
-    		<select id="select1">
-	<div id="dropdowns">
-  		<div class="dropdown">
-    		<label for="select1">Select Dataset:</label>
-    		<select id="select1">
-    		</select>
-  		</div>
+<div class="userContainer">
+	<label>Select Data</label><br>
+	<div class="userSelect">
+		<label for="y1">Select Y1:</label>
+		<select id="y1" onchange="updateGraph('y1')"></select>
+		<div id="y1Legend" class="userLive">
+		</div>	
 	</div>
-	<canvas id="myChart1" style="height: 50px; width: 400px;"></canvas>
-
-	<!-- Second chart -->
-	<label for="select-chart2">Select Chart 2:</label>
-	<select id="select-chart2" onchange="updateChart(myChart2, 'select-chart2')"></select>
-	<canvas id="myChart2" style="height: 50px; width: 400px;"></canvas>
-
-	<!-- Third chart -->
-	<label for="select-chart3">Select Chart 3:</label>
-	<select id="select-chart3" onchange="updateChart(myChart3, 'select-chart3')"></select>
-	<canvas id="myChart3" style="height: 50px; width: 400px;"></canvas>
-
+	<div class="userSelect">
+		<label for="y2">Select Y2:</label>
+		<select id="y2" onchange="updateGraph('y2')"></select>
+		<div id="y2Legend" class="userLive">
+		</div>	
+	</div>
+	<div class="userSelect">
+		<label for="y3">Select Y3:</label>
+		<select id="y3" onchange="updateGraph('y3')"></select>
+		<div id="y3Legend" class="userLive">
+		</div>	
+	</div>
+	<div class="userSelect">
+		<label for="y4">Select Y4:</label>
+		<select id="y4" onchange="updateGraph('y4')"></select>
+		<div id="y4Legend" class="userLive">
+		</div>	
+	</div>
+</div>
+<br>
+<div id="chartDiv" class="dataContainer">
+	<div class="dataRecent">
+		<label>Live data</label>
+	</div>	
+	<div class="dataGraph">
+		<canvas id="myChart" ></canvas>
+	</div>
+</div>
+	
+	
 	<!-- The script for updating the charts and checking json file. -->
 	<script src="app.js"></script>
 </body>
