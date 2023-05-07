@@ -234,11 +234,6 @@ displayFormats: {
   
 };
 
-//const graphBody = document.querySelector('.dataGraph');
-
-//if(myChart.data.datasets[0].data.length > 3){
-//  graphBody.style.width = '5000px';
-//}
 
 var chartOptions = {
   pointRadius: 0,
@@ -300,6 +295,14 @@ var ctx = document.getElementById('myChart').getContext('2d');
       options: chartOptions
 
     });
+
+    
+const chartContainer = document.getElementById('dataGraph');
+//if(myChart.data.datasets[0].data.length > 3){
+  chartContainer.style.width = '2000px';
+  myChart.resize(2000, null);
+  
+//}
 
 
     function getRandomColor() {

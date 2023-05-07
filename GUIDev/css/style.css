@@ -61,8 +61,8 @@ body {
   
   
   .dataContainer {
-    position: relative;
     display: flex;
+    overflow-x: scroll;
     height: 750px;
     width: 100%; /* set the desired width */
     max-width: 95%;
@@ -84,17 +84,9 @@ body {
       
   }
 
-  .dataContainer > canvas {
-    position: absolute;
-   left: 0;
-   top: 0;
-   pointer-events:none;
-}
-
-
   .dataGraph {
-    width: 600px;
-    overflow-x: scroll;
+    
+    height: 100%;
     
   }
 
