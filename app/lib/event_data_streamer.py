@@ -51,7 +51,7 @@ class EventDataStreamer:
     return await cur.fetchall()
     
   def _process_rows(self, rows: list[tuple[any, ...]]) -> dict[str, str]:
-    self._maximum_retrieved_id = rows[0][0]
+    self._maximum_retrieved_id = rows[len(rows)-1][0]
     
     output = {}
     for row in rows:
