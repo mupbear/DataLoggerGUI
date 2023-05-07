@@ -61,11 +61,11 @@ body {
   
   
   .dataContainer {
+    position: relative;
     display: flex;
     height: 750px;
     width: 100%; /* set the desired width */
-    max-width: 99%;
-    overflow-x: scroll;
+    max-width: 95%;
     margin: 0 auto; /* center the container horizontally */padding: 5px;
     border-radius: 10px;
     border: solid 3px #FFFFFF;
@@ -81,12 +81,20 @@ body {
     #81C8BD 72.7%,
     #81C8BD  
   );
-    
+      
   }
+
+  .dataContainer > canvas {
+    position: absolute;
+   left: 0;
+   top: 0;
+   pointer-events:none;
+}
+
+
   .dataGraph {
-    margin-left: 20px;
-    height: 100%;
-    width: 100%;
+    width: 600px;
+    overflow-x: scroll;
     
   }
 

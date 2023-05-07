@@ -15,6 +15,8 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script src="https://unpkg.com/chart.js-plugin-labels-dv/dist/chartjs-plugin-labels.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+	
+     
 
 
 	<link rel="stylesheet" href="css/style.css">
@@ -84,8 +86,9 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
 		</div>
 	</div>	
 	<div class="dataGraph">
-		<canvas id="myChart" ></canvas>
+		<canvas id="myChart" height="300" width="1200"></canvas>
 	</div>
+	<canvas id="myChartAxis" height="300" width="0"></canvas>
 </div>
 	
 	
