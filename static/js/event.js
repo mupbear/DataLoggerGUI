@@ -31,6 +31,7 @@ async function RetrieveNewData()
     {
       const decoded_data = new TextDecoder().decode(value);
       console.log(decoded_data);
+      console.log("Finished decoding")
       //const parsed_data = JSON.parse(decoded_data);
       //console.log(parsed_data);
     }

@@ -33,7 +33,7 @@ class EventDataStreamer:
     await sleep(1)
     rows = await self._select_rows()
     result = self._process_rows(rows) if rows else {}
-    return encode_json(result)
+    return encode_json(result) + b"\n\n"
     
   async def _select_rows(self) -> list[tuple[any, ...]]:
     data = None
