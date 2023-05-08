@@ -9,10 +9,9 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
 
-    {% block import %} {% endblock import %}
-
     <title>{{ title }}</title>
-    {% block style %} {% endblock style %}
+    
+    {% block head %} {% endblock head %}
   </head>
   
   <body class="min-h-screen bg-white-300 dark:bg-neutral-800">
@@ -25,5 +24,3 @@
     </footer>
   </body>
 </html>
-
-{% block script %} {% endblock script %}

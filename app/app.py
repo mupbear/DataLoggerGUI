@@ -17,15 +17,14 @@ import json
 logger = logging.getLogger("app")
 
 async def before_startup_handler(app_instance: Litestar) -> None:
-  #logger.info("Connecting to MySQL database...")
-  #app_instance.state.pool = await aiomysql.create_pool(
-    #host="162.241.244.103", port=3306, 
-    #user="regtersc_webserver", password="BroodjeKaas",
-    #db="regtersc_data_test"
-  #)
+  logger.info("Connecting to MySQL database...")
+  app_instance.state.pool = await aiomysql.create_pool(
+    host="162.241.244.103", port=3306, 
+    user="regtersc_webserver", password="BroodjeKaas",
+    db="regtersc_data_test"
+  )
   
   logger.info("Loading current event config...")
-  app_instance.state.event_config = None
   async with aiofiles.open("./static/json/event_config.json", mode='r') as event_config_file:
     event_config = json.loads(await event_config_file.read())
     app_instance.state.event_config = EventConfig(event_config)
@@ -35,12 +34,16 @@ async def before_shutdown_handler(app_instance: Litestar) -> None:
   logger.info("Disconnecting from MySQL database...")
   app_instance.state.pool.close()
   await app_instance.state.pool.wait_closed()
+  
+async def after_exception_handler(exception: Exception, scope: "Scope", state: "State") -> None:
+  requested_path = scope["path"]
+  logger.info(f"An exception of type \'{exception}\' has occurred for requested path \'{requested_path}\'.")
 
-@get("/root", media_type=MediaType.HTML, cache=False)
-async def get_root() -> Template:
+@get("/", media_type=MediaType.HTML, cache=False)
+async def get_index() -> Template:
   return Template(
     name="root.html.jinja2",
-    context={"title": "Home"},
+    context={"title": "Login"},
   )
 
 @get("/home", media_type=MediaType.HTML, cache=False)
@@ -56,14 +59,7 @@ async def get_event() -> Template:
     name="event.html.jinja2",
     context={"title": "Racing Event Analysis"},
   )
-
-@get("/", media_type=MediaType.HTML, cache=False)
-async def get_index() -> Template:
-  return Template(
-    name="index.html.jinja2",
-    context={"title": "Login"},
-  )
-
+  
 @post("/event", media_type=MediaType.JSON)
 async def post_event(state: State, data: dict[str, str]) -> Stream:
   event_data_streamer = EventDataStreamer(pool=state.pool, event_config=state.event_config)
@@ -72,7 +68,8 @@ async def post_event(state: State, data: dict[str, str]) -> Stream:
 app = Litestar(
   before_startup=[before_startup_handler],
   before_shutdown=[before_shutdown_handler],
-  route_handlers=[get_root, get_event, post_event, get_home, get_index],
+  after_exception=[after_exception_handler],
+  route_handlers=[get_event, post_event, get_home, get_index],
   template_config=TemplateConfig(
     directory=Path("templates"),
     engine=JinjaTemplateEngine,
