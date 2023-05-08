@@ -1,6 +1,5 @@
 from app.lib.mysql_queries import QUERY_SELECT_FILTERED_RAW_DATA
 
-from litestar.datastructures import State, ImmutableState
 from litestar.serialization import encode_json
 import aiomysql
 
@@ -34,7 +33,6 @@ class EventDataStreamer:
     await sleep(1)
     rows = await self._select_rows()
     result = self._process_rows(rows) if rows else {}
-    #logger.info({rows})
     return encode_json(result)
     
   async def _select_rows(self) -> list[tuple[any, ...]]:
@@ -58,22 +56,17 @@ class EventDataStreamer:
     
     output = {}
     for row in rows:
-      sensor_values, timestamp = self._process_can_data_to_sensor_values_and_timestamp(row)
-      # Process sensor values here into the desirable JSON output     
-      for sensor_unit, (value, sensor_name) in sensor_values.items():
-      
-          if sensor_unit not in output:
-                output[sensor_unit] = {"value": sensor_unit}
-
-          if sensor_name not in output[sensor_unit]:
-                output[sensor_unit][sensor_name] = {"value": sensor_unit, "label": sensor_unit, "data": []}  
-
-          output[sensor_unit][sensor_name]["data"].append({"timestamp": timestamp, "value": value}) 
-    
-    # Return your desirable JSON output here 
+      timestamp = row[3]
+      value_by_sensor_name = self._process_can_data_to_sensor_values(row)   
+      for name, value in value_by_sensor_name.items():
+          if name not in output:
+            output[name] = {}
+            
+          output[name].append({"v": value, "t": timestamp}) 
+     
     return output
 
-  def _process_can_data_to_sensor_values_and_timestamp(self, row: tuple[any, ...]) -> tuple[dict[str, tuple[str, str]], str]:
+  def _process_can_data_to_sensor_values(self, row: tuple[any, ...]) -> dict[str, float]:
     # row_id = row[0]
     can_id: str = str(row[1])
     cvalue: ctypes.c_uint64 = ctypes.c_uint64(row[2])
@@ -92,9 +85,9 @@ class EventDataStreamer:
         sensor_value = int.from_bytes((sensor_value.to_bytes(4, byteorder='big', signed=signed)), byteorder='big', signed=signed)
         sensor_value = sensor_value * config["multiplier"] + config["offset"]
         
-        if sensor_value < config["minimum_value"] or sensor_value > config["maximum_value"]:
-          logger.error(f"Sensor config: {config} produced out of bounds sensor value: {sensor_value} from original CAN value: {cvalue.value} with CAN ID: {can_id}, and timestamp: {timestamp}, and row ID: {row_id}")
-        else:
-          value_and_unit_by_sensor_name[config["unit"]] = (sensor_value, config["sensor_name"])
+        # if sensor_value < config["minimum_value"] or sensor_value > config["maximum_value"]:
+        #   logger.error(f"Sensor config: {config} produced out of bounds sensor value: {sensor_value} from original CAN value: {cvalue.value} with CAN ID: {can_id}, and timestamp: {timestamp}, and row ID: {row_id}")
+        # else:
+        value_by_sensor_name[config["sensor_name"]] = sensor_value
         
-    return (value_and_unit_by_sensor_name, timestamp)
+    return value_by_sensor_name

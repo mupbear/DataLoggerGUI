@@ -1,7 +1,8 @@
 from app.lib.event_data_streamer import EventConfig, EventDataStreamer
 
 from litestar import Litestar, MediaType, get, post
-from litestar.datastructures import State, ImmutableState
+from litestar.config.compression import CompressionConfig
+from litestar.datastructures import State #ImmutableState is unsable due to a potential bug
 from litestar.logging.config import LoggingConfig
 from litestar.static_files.config import StaticFilesConfig
 from litestar.contrib.jinja import JinjaTemplateEngine
@@ -60,7 +61,7 @@ async def get_event() -> Template:
     context={"title": "Racing Event Analysis"},
   )
   
-@post("/event", media_type=MediaType.JSON)
+@post("/event", media_type=MediaType.JSON, cache=False)
 async def post_event(state: State, data: dict[str, str]) -> Stream:
   event_data_streamer = EventDataStreamer(pool=state.pool, event_config=state.event_config)
   return Stream(iterator=event_data_streamer)
@@ -69,6 +70,7 @@ app = Litestar(
   before_startup=[before_startup_handler],
   before_shutdown=[before_shutdown_handler],
   after_exception=[after_exception_handler],
+  # compression_config=CompressionConfig(backend="gzip", gzip_compress_level=9, minimum_size=500), THIS LINE CAUSES A POTENTIAL BUG, LETS WAIT FOR DEVS TO ANSWER/FIX IT
   route_handlers=[get_event, post_event, get_home, get_index],
   template_config=TemplateConfig(
     directory=Path("templates"),

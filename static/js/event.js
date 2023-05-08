@@ -23,8 +23,6 @@ async function RetrieveNewData()
   });
 
   const reader = response.body.getReader();
-  let buffer = '';
-  const chunkSize = 1024; // The size of each chunk
   
   while (true) 
   {
@@ -32,15 +30,14 @@ async function RetrieveNewData()
     if (value)
     {
       const decoded_data = new TextDecoder().decode(value);
-      //console.log(decoded_data);
-      const parsed_data = JSON.parse(decoded_data);
-      console.log(parsed_data);
-      
+      console.log(decoded_data);
+      //const parsed_data = JSON.parse(decoded_data);
+      //console.log(parsed_data);
     }
 
     if (done || !keep_running) 
     {
-      console.log("done");
+      console.log("Done retrieving data");
       return;
     }
   }
