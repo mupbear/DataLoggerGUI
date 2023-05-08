@@ -74,7 +74,7 @@ class EventDataStreamer:
     return output
 
   def _process_can_data_to_sensor_values_and_timestamp(self, row: tuple[any, ...]) -> tuple[dict[str, tuple[str, str]], str]:
-    row_id = row[0]
+    # row_id = row[0]
     can_id: str = str(row[1])
     cvalue: ctypes.c_uint64 = ctypes.c_uint64(row[2])
     timestamp: str = row[3]
