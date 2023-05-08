@@ -60,7 +60,7 @@ class EventDataStreamer:
       value_by_sensor_name = self._process_can_data_to_sensor_values(row)   
       for name, value in value_by_sensor_name.items():
           if name not in output:
-            output[name] = {}
+            output[name] = []
             
           output[name].append({"v": value, "t": timestamp}) 
      
@@ -72,7 +72,7 @@ class EventDataStreamer:
     cvalue: ctypes.c_uint64 = ctypes.c_uint64(row[2])
     timestamp: str = row[3]
     
-    value_and_unit_by_sensor_name: dict[str, tuple[str, str]] = {}
+    value_by_sensor_name: dict[str, tuple[str, str]] = {}
     if can_id in self._event_config.sensor_config:
       configs: list[dict[str, any]] = self._event_config.sensor_config[can_id]
       for config in configs:
