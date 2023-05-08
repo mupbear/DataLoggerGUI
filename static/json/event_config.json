@@ -44,9 +44,9 @@
         "signed":false,
         "minimum_value":0.0,
         "maximum_value":600.0,
-        "multiplier":1.0,
+        "multiplier":100.0,
         "offset":0.0,
-        "unit":"kPa"
+        "unit":"Bar"
       },
       {
         "sensor_name":"INJPW",
@@ -151,7 +151,7 @@
         "maximum_value":60.0,
         "multiplier":0.5,
         "offset":0.0,
-        "unit":"Deg"
+        "unit":"\u00b0"
       },
       {
         "sensor_name":"DWELL",
@@ -165,7 +165,7 @@
         "unit":"ms"
       },
       {
-        "sensor_name":"LAMBDA",
+        "sensor_name":"LAMBA1",
         "byte_offset":2.0,
         "byte_width":1.0,
         "signed":false,
@@ -472,7 +472,7 @@
         "unit":"V"
       },
       {
-        "sensor_name":"HEATR_PWR",
+        "sensor_name":"HEATR_DC_PWR",
         "byte_offset":2.0,
         "byte_width":1.0,
         "signed":false,
@@ -480,7 +480,7 @@
         "maximum_value":100.0,
         "multiplier":0.39215686274,
         "offset":0.0,
-        "unit":"%DC"
+        "unit":"%"
       },
       {
         "sensor_name":"SENS_TEMP",
@@ -494,7 +494,7 @@
         "unit":"\u00b0C"
       },
       {
-        "sensor_name":"Lambda",
+        "sensor_name":"LAMBDA2",
         "byte_offset":4.0,
         "byte_width":2.0,
         "signed":false,
@@ -502,7 +502,7 @@
         "maximum_value":65.535,
         "multiplier":0.001,
         "offset":0.0,
-        "unit":"N/A"
+        "unit":"Lambda"
       },
       {
         "sensor_name":"VM_VCC_SHORT1",
