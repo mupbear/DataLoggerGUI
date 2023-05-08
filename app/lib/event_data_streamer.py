@@ -83,8 +83,8 @@ class EventDataStreamer:
     if can_id in self._event_config.sensor_config:
       configs: list[dict[str, any]] = self._event_config.sensor_config[can_id]
       for config in configs:
-        bit_offset: int = int(config["byte_offset"]) * 8 # should probably just change byte_offset to bit_offset in the event_config.json
-        bit_width: int = int(config["byte_width"]) * 8 # should probably just change byte_width to bit_width in the event_config.json
+        bit_offset: int = int(config["byte_offset"] * 8) # should probably just change byte_offset to bit_offset in the event_config.json
+        bit_width: int = int(config["byte_width"] * 8) # should probably just change byte_width to bit_width in the event_config.json
         signed: bool = config["signed"]
         
         shift_right_n: int = 64 - bit_width - bit_offset # 64 because we first cast the number to 64-bit ctypes.c_uint64
