@@ -87,6 +87,3 @@ app = Litestar(
     }
   )
 )
-
-
-

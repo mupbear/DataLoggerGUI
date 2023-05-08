@@ -38,6 +38,7 @@ class EventDataStreamer:
     return encode_json(result)
     
   async def _select_rows(self) -> list[tuple[any, ...]]:
+    data = None
     async with self._pool.acquire() as conn:
       cur = await conn.cursor()
       await cur.execute(
@@ -48,7 +49,9 @@ class EventDataStreamer:
           self._event_config.maximum_timestamp,
           self._event_config.can_ids)
       )
-    return await cur.fetchall()
+      data = await cur.fetchall()
+    
+    return data
     
   def _process_rows(self, rows: list[tuple[any, ...]]) -> dict[str, str]:
     self._maximum_retrieved_id = rows[len(rows)-1][0]
@@ -71,7 +74,7 @@ class EventDataStreamer:
     return output
 
   def _process_can_data_to_sensor_values_and_timestamp(self, row: tuple[any, ...]) -> tuple[dict[str, tuple[str, str]], str]:
-    # row_id = row[0]
+    row_id = row[0]
     can_id: str = str(row[1])
     cvalue: ctypes.c_uint64 = ctypes.c_uint64(row[2])
     timestamp: str = row[3]
@@ -80,22 +83,18 @@ class EventDataStreamer:
     if can_id in self._event_config.sensor_config:
       configs: list[dict[str, any]] = self._event_config.sensor_config[can_id]
       for config in configs:
-        bit_offset: int = config["byte_offset"] * 8 # should probably just change byte_offset to bit_offset in the event_config.json
-        bit_width: int = config["byte_width"] * 8 # should probably just change byte_width to bit_width in the event_config.json
+        bit_offset: int = int(config["byte_offset"]) * 8 # should probably just change byte_offset to bit_offset in the event_config.json
+        bit_width: int = int(config["byte_width"]) * 8 # should probably just change byte_width to bit_width in the event_config.json
         signed: bool = config["signed"]
         
         shift_right_n: int = 64 - bit_width - bit_offset # 64 because we first cast the number to 64-bit ctypes.c_uint64
-        sensor_value: int = int(cvalue.value) >> int(shift_right_n) & int(2**bit_width - 1)
+        sensor_value = (cvalue.value >> shift_right_n) & (2**bit_width - 1)
         sensor_value = int.from_bytes((sensor_value.to_bytes(4, byteorder='big', signed=signed)), byteorder='big', signed=signed)
         sensor_value = sensor_value * config["multiplier"] + config["offset"]
         
-        #if sensor_value < config["minimum_value"] or sensor_value > config["maximum_value"]:
-          #logger.error(f"Sensor config: {config} produced out of bounds sensor value: {sensor_value} from original CAN value: {cvalue.value}")
-
-        #else:
-        value_and_unit_by_sensor_name[config["unit"]] = (sensor_value, config["sensor_name"])
+        if sensor_value < config["minimum_value"] or sensor_value > config["maximum_value"]:
+          logger.error(f"Sensor config: {config} produced out of bounds sensor value: {sensor_value} from original CAN value: {cvalue.value} with CAN ID: {can_id}, and timestamp: {timestamp}, and row ID: {row_id}")
+        else:
+          value_and_unit_by_sensor_name[config["unit"]] = (sensor_value, config["sensor_name"])
         
     return (value_and_unit_by_sensor_name, timestamp)
-    
-    
-    
