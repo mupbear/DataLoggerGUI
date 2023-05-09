@@ -31,7 +31,7 @@
         "byte_offset":3.0,
         "byte_width":1.0,
         "signed":true,
-        "minimum_value":40.0,
+        "minimum_value":-40.0,
         "maximum_value":127.0,
         "multiplier":1.0,
         "offset":0.0,
@@ -134,7 +134,7 @@
         "byte_offset":6.0,
         "byte_width":2.0,
         "signed":true,
-        "minimum_value":40.0,
+        "minimum_value":-40.0,
         "maximum_value":250.0,
         "multiplier":1.0,
         "offset":0.0,
@@ -147,7 +147,7 @@
         "byte_offset":0.0,
         "byte_width":1.0,
         "signed":true,
-        "minimum_value":60.0,
+        "minimum_value":-60.0,
         "maximum_value":60.0,
         "multiplier":0.5,
         "offset":0.0,
@@ -174,17 +174,6 @@
         "multiplier":0.0078125,
         "offset":0.0,
         "unit":"Lambda"
-      },
-      {
-        "sensor_name":"LAMCORR",
-        "byte_offset":3.0,
-        "byte_width":1.0,
-        "signed":false,
-        "minimum_value":75.0,
-        "maximum_value":125.0,
-        "multiplier":0.5,
-        "offset":0.0,
-        "unit":"%"
       }
     ],
     "1540":[
@@ -204,7 +193,7 @@
         "byte_offset":1.0,
         "byte_width":1.0,
         "signed":true,
-        "minimum_value":40.0,
+        "minimum_value":-40.0,
         "maximum_value":120.0,
         "multiplier":1.0,
         "offset":0.0,

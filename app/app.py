@@ -62,8 +62,8 @@ async def get_event() -> Template:
     context={"title": "Racing Event Analysis"},
   )
   
-@post("/event", media_type=MediaType.JSON)
-async def post_event(state: State, data: dict[str, str]) -> Stream:
+@get("/event_data", media_type="text/event-stream")
+async def post_event(state: State) -> Stream:
   event_data_streamer = EventDataStreamer(pool=state.pool, event_config=state.event_config)
   return Stream(iterator=event_data_streamer)
 

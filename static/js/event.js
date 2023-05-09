@@ -13,35 +13,44 @@ function StopRetrievingData()
 
 async function RetrieveNewData() 
 {
-  const response = await fetch('', {
-    method: "POST",
-    headers: {
-      "Accept": "application/json",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({}),
-  });
+  const event_source = new EventSource('event_data');
+  event_source.onmessage = (event) => {
+    console.log(event.data)
+  };
 
-  const reader = response.body.getReader();
+  event_source.onerror = (err) => {
+    console.error("EventSource failed:", err);
+  };
+
+  // const response = await fetch('', {
+  //   method: "POST",
+  //   headers: {
+  //     "Accept": "application/json",
+  //     "Content-Type": "application/json",
+  //   },
+  //   body: JSON.stringify({}),
+  // });
+
+  // const reader = response.body.getReader();
   
-  while (true) 
-  {
-    const { done, value } = await reader.read();
-    if (value)
-    {
-      const decoded_data = new TextDecoder().decode(value);
-      console.log(decoded_data);
-      console.log("Finished decoding")
-      //const parsed_data = JSON.parse(decoded_data);
-      //console.log(parsed_data);
-    }
+  // while (true) 
+  // {
+  //   const { done, value } = await reader.read();
+  //   if (value)
+  //   {
+  //     const decoded_data = new TextDecoder().decode(value);
+  //     console.log(decoded_data);
+  //     console.log("Finished decoding")
+  //     //const parsed_data = JSON.parse(decoded_data);
+  //     //console.log(parsed_data);
+  //   }
 
-    if (done || !keep_running) 
-    {
-      console.log("Done retrieving data");
-      return;
-    }
-  }
+  //   if (done || !keep_running) 
+  //   {
+  //     console.log("Done retrieving data");
+  //     return;
+  //   }
+  // }
 }
 
 var dark = false;
