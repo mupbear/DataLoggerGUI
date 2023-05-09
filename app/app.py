@@ -20,6 +20,7 @@ logger = logging.getLogger("app")
 async def before_startup_handler(app_instance: Litestar) -> None:
   logger.info("Connecting to MySQL database...")
   app_instance.state.pool = await aiomysql.create_pool(
+    minsize=1, maxsize=2, pool_recycle=5,
     host="162.241.244.103", port=3306, 
     user="regtersc_webserver", password="BroodjeKaas",
     db="regtersc_data_test"
