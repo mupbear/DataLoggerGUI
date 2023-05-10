@@ -1,5 +1,5 @@
 {
-  "car_name":"regtersc_RaceCar01",
+  "car_name":"RaceCar01",
   "minimum_timestamp":"2023-04-20 00:00:00.0000000",
   "maximum_timestamp":"2023-04-20 23:59:00.0000000",
   "sensors":{

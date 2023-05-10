@@ -21,9 +21,9 @@ async def before_startup_handler(app_instance: Litestar) -> None:
   logger.info("Connecting to MySQL database...")
   app_instance.state.pool = await aiomysql.create_pool(
     minsize=1, maxsize=2, pool_recycle=5,
-    host="162.241.244.103", port=3306, 
-    user="regtersc_webserver", password="BroodjeKaas",
-    db="regtersc_data_test"
+    host="regterscdb.cxviwqvwghdq.eu-central-1.rds.amazonaws.com", port=3306, 
+    user="WebUser01", password="WebUser01",
+    db="regtertestdata"
   )
   
   logger.info("Loading current event config...")
@@ -63,7 +63,7 @@ async def get_event() -> Template:
   )
   
 @get("/event_data", media_type="text/event-stream")
-async def post_event(state: State) -> Stream:
+async def get_event_data(state: State) -> Stream:
   event_data_streamer = EventDataStreamer(pool=state.pool, event_config=state.event_config)
   return Stream(iterator=event_data_streamer)
 
@@ -72,7 +72,7 @@ app = Litestar(
   before_shutdown=[before_shutdown_handler],
   after_exception=[after_exception_handler],
   # compression_config=CompressionConfig(backend="gzip", gzip_compress_level=9, minimum_size=500), THIS LINE CAUSES A POTENTIAL BUG, LETS WAIT FOR DEVS TO ANSWER/FIX IT
-  route_handlers=[get_event, post_event, get_home, get_index],
+  route_handlers=[get_event, get_event_data, get_home, get_index],
   template_config=TemplateConfig(
     directory=Path("templates"),
     engine=JinjaTemplateEngine,

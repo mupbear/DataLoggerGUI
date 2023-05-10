@@ -1,19 +1,9 @@
-let keep_running = false;
+let event_source = null;
+
 
 function StartRetrievingData()
 {    
-  keep_running = true;
-  RetrieveNewData();
-}
-
-function StopRetrievingData()
-{
-  keep_running = false;
-}
-
-async function RetrieveNewData() 
-{
-  const event_source = new EventSource('event_data');
+  event_source = new EventSource('event_data');
   event_source.onmessage = (event) => {
     console.log(event.data)
   };
@@ -21,36 +11,12 @@ async function RetrieveNewData()
   event_source.onerror = (err) => {
     console.error("EventSource failed:", err);
   };
+}
 
-  // const response = await fetch('', {
-  //   method: "POST",
-  //   headers: {
-  //     "Accept": "application/json",
-  //     "Content-Type": "application/json",
-  //   },
-  //   body: JSON.stringify({}),
-  // });
-
-  // const reader = response.body.getReader();
-  
-  // while (true) 
-  // {
-  //   const { done, value } = await reader.read();
-  //   if (value)
-  //   {
-  //     const decoded_data = new TextDecoder().decode(value);
-  //     console.log(decoded_data);
-  //     console.log("Finished decoding")
-  //     //const parsed_data = JSON.parse(decoded_data);
-  //     //console.log(parsed_data);
-  //   }
-
-  //   if (done || !keep_running) 
-  //   {
-  //     console.log("Done retrieving data");
-  //     return;
-  //   }
-  // }
+function StopRetrievingData()
+{
+  event_source.close();
+  event_source = null;
 }
 
 var dark = false;

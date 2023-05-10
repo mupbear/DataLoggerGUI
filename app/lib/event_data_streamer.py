@@ -64,7 +64,7 @@ class EventDataStreamer:
             output[name] = []
           
           
-          output[name].append({"v": value, "t": timestamp.timestamp()}) 
+          output[name].append({"x": timestamp, "y": value}) 
      
     return output
 
