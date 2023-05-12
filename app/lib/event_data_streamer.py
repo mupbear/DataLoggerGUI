@@ -85,12 +85,12 @@ class EventDataStreamer:
         
         shift_right_n: int = 64 - bit_width - bit_offset # 64 because we first cast the number to 64-bit ctypes.c_uint64
         sensor_value = (cvalue.value >> shift_right_n) & (2**bit_width - 1)
-        sensor_value = int.from_bytes((sensor_value.to_bytes(4, byteorder='big', signed=signed)), byteorder='little', signed=signed)
+        sensor_value = int.from_bytes((sensor_value.to_bytes(4, byteorder='big', signed=False)), byteorder='little', signed=signed)
         sensor_value = sensor_value * config["multiplier"] + config["offset"]
         
-        if sensor_value < config["minimum_value"] or sensor_value > config["maximum_value"]:
-          logger.error(f"Sensor config: {config} produced out of bounds sensor value: {sensor_value} from original CAN value: {cvalue.value} with CAN ID: {can_id}, and timestamp: {timestamp}, and row ID: {row_id}")
-        else:
-          value_by_sensor_name[config["sensor_name"]] = sensor_value
+        # if sensor_value < config["minimum_value"] or sensor_value > config["maximum_value"]:
+        #   logger.error(f"Sensor config: {config} produced out of bounds sensor value: {sensor_value} from original CAN value: {cvalue.value} with CAN ID: {can_id}, and timestamp: {timestamp}, and row ID: {row_id}")
+        # else:
+        value_by_sensor_name[config["sensor_name"]] = sensor_value
         
     return value_by_sensor_name
