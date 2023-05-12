@@ -11,7 +11,7 @@ logger = logging.getLogger("app")
 
 class EventConfig:
   def __init__(self, event_config):
-    # assert(event_config & {"car", "minimum_timestamp", "maximum_timestamp", "sensors"})
+    assert({"car_name", "minimum_timestamp", "maximum_timestamp", "sensors"} <= set(event_config))
     self.car_name = event_config["car_name"]
     self.minimum_timestamp = event_config["minimum_timestamp"]
     self.maximum_timestamp = event_config["maximum_timestamp"]
@@ -37,7 +37,7 @@ class EventDataStreamer:
     return final_message
     
   async def _select_rows(self) -> list[tuple[any, ...]]:
-    data = None
+    rows = None
     async with self._pool.acquire() as conn:
       cur = await conn.cursor()
       await cur.execute(
@@ -48,9 +48,10 @@ class EventDataStreamer:
           self._event_config.maximum_timestamp,
           self._event_config.can_ids)
       )
-      data = await cur.fetchall()
+      rows = await cur.fetchall()
+      await conn.commit()
     
-    return data
+    return rows
     
   def _process_rows(self, rows: list[tuple[any, ...]]) -> dict[str, str]:
     self._maximum_retrieved_id = rows[len(rows)-1][0]
@@ -93,4 +94,3 @@ class EventDataStreamer:
           value_by_sensor_name[config["sensor_name"]] = sensor_value
         
     return value_by_sensor_name
-  
