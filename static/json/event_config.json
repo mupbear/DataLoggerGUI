@@ -1,7 +1,7 @@
 {
   "car_name":"RaceCar01",
-  "minimum_timestamp":"2023-04-20 00:00:00.0000000",
-  "maximum_timestamp":"2023-04-20 23:59:00.0000000",
+  "minimum_timestamp":"2023-05-12 13:00:00.0000000",
+  "maximum_timestamp":"2023-05-12 23:59:00.0000000",
   "sensors":{
     "1536":[
       {
@@ -43,8 +43,8 @@
         "byte_width":2.0,
         "signed":false,
         "minimum_value":0.0,
-        "maximum_value":600.0,
-        "multiplier":100.0,
+        "maximum_value":6.0,
+        "multiplier":0.01,
         "offset":0.0,
         "unit":"Bar"
       },

@@ -6,8 +6,15 @@ import aiomysql
 from asyncio import sleep
 import ctypes
 import logging
+import math
 
 logger = logging.getLogger("app")
+
+def _get_twos_comp(value: int, bits: int):
+    """compute the 2's complement of integer value haves a determined bit length"""
+    if (value & (1 << (bits - 1))) != 0:
+        value = value - (1 << bits)
+    return value
 
 class EventConfig:
   def __init__(self, event_config):
@@ -70,9 +77,9 @@ class EventDataStreamer:
     return output
 
   def _process_can_data_to_sensor_values(self, row: tuple[any, ...]) -> dict[str, float]:
-    row_id = row[0]
+    row_id: int = row[0]
     can_id: str = str(row[1])
-    cvalue: ctypes.c_uint64 = ctypes.c_uint64(row[2])
+    value: int = row[2]
     timestamp: str = row[3]
     
     value_by_sensor_name: dict[str, tuple[str, str]] = {}
@@ -82,15 +89,15 @@ class EventDataStreamer:
         bit_offset: int = int(config["byte_offset"] * 8) # should probably just change byte_offset to bit_offset in the event_config.json
         bit_width: int = int(config["byte_width"] * 8) # should probably just change byte_width to bit_width in the event_config.json
         signed: bool = config["signed"]
+        shift_right_n: int = 64 - bit_width - bit_offset # 64 because the data type in the database is a 64-bit unsigned integer
         
-        shift_right_n: int = 64 - bit_width - bit_offset # 64 because we first cast the number to 64-bit ctypes.c_uint64
-        sensor_value = (cvalue.value >> shift_right_n) & (2**bit_width - 1)
-        sensor_value = int.from_bytes((sensor_value.to_bytes(4, byteorder='big', signed=False)), byteorder='little', signed=signed)
+        sensor_value = (value >> shift_right_n) & (2**bit_width - 1)
+        sensor_value = int.from_bytes((sensor_value.to_bytes(math.ceil(bit_width / 8), byteorder='big', signed=False)), byteorder='little', signed=signed)
         sensor_value = sensor_value * config["multiplier"] + config["offset"]
         
-        # if sensor_value < config["minimum_value"] or sensor_value > config["maximum_value"]:
-        #   logger.error(f"Sensor config: {config} produced out of bounds sensor value: {sensor_value} from original CAN value: {cvalue.value} with CAN ID: {can_id}, and timestamp: {timestamp}, and row ID: {row_id}")
-        # else:
-        value_by_sensor_name[config["sensor_name"]] = sensor_value
+        if sensor_value < config["minimum_value"] or sensor_value > config["maximum_value"]:
+          logger.error(f"Sensor config: {config} produced out of bounds sensor value: {sensor_value} from original CAN value: {value} with CAN ID: {can_id}, and timestamp: {timestamp}, and row ID: {row_id}")
+        else:
+          value_by_sensor_name[config["sensor_name"]] = sensor_value
         
     return value_by_sensor_name
