@@ -2,6 +2,7 @@
 To do:
 - change specific time to current time
 - check frontend config, match with backend config
+- average is in seconds!
 */
 var windowTime = 5; //window in minutes
 
@@ -17,6 +18,7 @@ var graphData = [
   {
    "value": "percentage",
    "label": "Percentage (%)",
+   "average": 1,
    "data": 	{
      "datasets": 	[
              {
@@ -30,6 +32,7 @@ var graphData = [
   {
     "value": "pressure",
     "label": "Pressure (Bar)",
+    "average": 1,
     "data": 	{
       "datasets": 	[
               {
@@ -48,6 +51,7 @@ var graphData = [
   {
     "value": "RPM",
     "label": "RPM",
+    "average": 1,
     "data": 	{
       "datasets": 	[
               {
@@ -61,6 +65,7 @@ var graphData = [
   {
     "value": "gear",
     "label": "Gear (Position)",
+    "average": 1,
     "data": 	{
       "datasets": 	[
               {
@@ -74,6 +79,7 @@ var graphData = [
   {
     "value": "voltage",
     "label": "Voltage (V)",
+    "average": 1,
     "data": 	{
       "datasets": 	[
               {
@@ -117,6 +123,7 @@ var graphData = [
   {
     "value": "temperature",
     "label": "Temperature (C)",
+    "average": 1,
     "data": 	{
       "datasets": 	[
               {
@@ -140,6 +147,7 @@ var graphData = [
   {
     "value": "LAMBDA",
     "label": "LAMBDA",
+    "average": 1,
     "data": 	{
       "datasets": 	[
               {
@@ -154,13 +162,51 @@ var graphData = [
  
 let event_source = null;
 
+function averageData(dataValue, average){
+  const averagePerInterval = [];
+  let sum = 0;
+  let count = 0;
+  let currentInterval = Math.floor(new Date(dataValue[0].x).getTime() / 1000); // Initial interval
 
+  for (const item of dataValue) {
+    const timestampInSeconds = Math.floor(new Date(item.x).getTime() / 1000);
+    
+    if (timestampInSeconds - currentInterval < average) {
+      sum += item.y;
+      count++;
+    } else {
+      // Calculate average for the previous interval
+      if (count > 0) {
+        averagePerInterval.push({
+          x: new Date(currentInterval * 1000).toISOString(),
+          y: sum / count,
+        });
+      }
+
+      // Reset sum and count for the new interval
+      sum = item.y;
+      count = 1;
+      currentInterval = timestampInSeconds;
+    }
+  }
+
+  // Calculate average for the last interval (if any data)
+  if (count > 0) {
+    averagePerInterval.push({
+      x: new Date(currentInterval * 1000).toISOString(),
+      y: sum / count,
+    });
+  }
+
+  return averagePerInterval;
+}
 
 function combData(newData) {
 
   //const currentTime = new Date();
   const specificTime = new Date('2023-05-13T10:10:00.000000');
   const window = new Date(specificTime.getTime() - windowTime * 60 * 1000); // Five minutes ago as a Date object
+  var dataValue;
 
   for (var i = 0; i < graphData.length; i++){
     var entry = graphData[i];
@@ -174,19 +220,34 @@ function combData(newData) {
       for (var j = 0; j < entry.data.datasets.length; j++){
         var dataset = entry.data.datasets[j];
         var datasetValue = dataset.value;
-        
-        
-        if (trialData.hasOwnProperty(datasetValue)) {
-  
-          var dataValue = trialData[datasetValue];
-          entry.data.datasets[j].data.push(...dataValue);
-          
-      }
+
         entry.data.datasets[j].data = entry.data.datasets[j].data.filter((data) => {
           const dataTimestamp = new Date(data.x);
           return dataTimestamp >= window;
         });
-        //console.log(graphData);
+        
+        if (trialData.hasOwnProperty(datasetValue)) {
+  
+          dataValue = trialData[datasetValue];
+          dataValue = averageData(dataValue, entry.average);
+          entry.data.datasets[j].data.push(...dataValue);
+          
+      }
+
+      for (var c = 0; c < myChart.data.datasets.length; c++){
+        myChart.data.datasets[c].data = myChart.data.datasets[c].data.filter((data) => {
+          const dataTimestamp = new Date(data.x);
+          return dataTimestamp >= window;
+        });
+        
+        if (datasetValue === myChart.data.datasets[c].value && trialData.hasOwnProperty(datasetValue)) {
+          console.log(dataValue);
+          myChart.data.datasets[c].data.push(...dataValue); 
+      }
+    
+  }
+        
+       
     }
   }
 }
@@ -198,8 +259,7 @@ function StartRetrievingData()
   event_source.onmessage = (event) => {
     console.log(event.data);
     combData(event.data);
-    
-    
+    myChart.update();
   };
 
   event_source.onerror = (err) => {
@@ -344,14 +404,6 @@ var ctx = document.getElementById('myChart').getContext('2d');
 
   });
 
-  
-const chartContainer = document.getElementById('dataGraph');
-//if(myChart.data.datasets[0].data.length > 3){
-chartContainer.style.width = '2000px';
-myChart.resize(2000, null);
-
-//}
-
 
 
 
@@ -374,6 +426,7 @@ if(selectID === 'y4'){return document.getElementById("y4Legend");}
 }
 
 function updateGraph(selectID) {
+  console.log(selectID);
   var selectBox = document.getElementById(selectID);
   var selectedValue = selectBox.options[selectBox.selectedIndex].value;
   var divID = checkID(selectID);
