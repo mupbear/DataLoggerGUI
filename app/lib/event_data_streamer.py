@@ -70,11 +70,11 @@ class EventDataStreamer:
       for name, value in value_by_sensor_name.items():
           if name not in output:
             output[name] = []
-          
-          
+
           output[name].append({"x": timestamp, "y": value}) 
-     
+    #logger.info(output) 
     return output
+
 
   def _process_can_data_to_sensor_values(self, row: tuple[any, ...]) -> dict[str, float]:
     row_id: int = row[0]
@@ -90,7 +90,7 @@ class EventDataStreamer:
         bit_width: int = int(config["byte_width"] * 8) # should probably just change byte_width to bit_width in the event_config.json
         signed: bool = config["signed"]
         shift_right_n: int = 64 - bit_width - bit_offset # 64 because the data type in the database is a 64-bit unsigned integer
-        
+
         sensor_value = (value >> shift_right_n) & (2**bit_width - 1)
         sensor_value = int.from_bytes((sensor_value.to_bytes(math.ceil(bit_width / 8), byteorder='big', signed=False)), byteorder='little', signed=signed)
         sensor_value = sensor_value * config["multiplier"] + config["offset"]
@@ -99,5 +99,9 @@ class EventDataStreamer:
           logger.error(f"Sensor config: {config} produced out of bounds sensor value: {sensor_value} from original CAN value: {value} with CAN ID: {can_id}, and timestamp: {timestamp}, and row ID: {row_id}")
         else:
           value_by_sensor_name[config["sensor_name"]] = sensor_value
+          
         
     return value_by_sensor_name
+
+
+
