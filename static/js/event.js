@@ -1,11 +1,265 @@
+/*
+To do:
+- change specific time to current time
+- check frontend config, match with backend config
+- average is in seconds!
+*/
+var windowTime = 5; //window in minutes
+
+
+var graphData = [  
+  {
+    "value": "empty",
+    "label": "None Selected",
+    "data": 	{
+      "datasets": 	[]
+          }
+   },
+  {
+   "value": "percentage",
+   "label": "Percentage (%)",
+   "average": 1,
+   "data": 	{
+     "datasets": 	[
+             {
+         "value": "TPS",
+         "label": "TPS",
+         "data": 		[]
+              }
+             ]
+         }
+  },
+  {
+    "value": "pressure",
+    "label": "Pressure (Bar)",
+    "average": 1,
+    "data": 	{
+      "datasets": 	[
+              {
+          "value": "OILP",
+          "label": "OILP",
+          "data": 		[]
+               },
+               {
+          "value": "FUELP",
+          "label": "FUELP",
+          "data": 		[]
+               }
+              ]
+          }
+  },
+  {
+    "value": "RPM",
+    "label": "RPM",
+    "average": 1,
+    "data": 	{
+      "datasets": 	[
+              {
+          "value": "RPM",
+          "label": "RPM",
+          "data": 		[]
+               }
+              ]
+          }
+  },
+  {
+    "value": "gear",
+    "label": "Gear (Position)",
+    "average": 1,
+    "data": 	{
+      "datasets": 	[
+              {
+          "value": "GEAR",
+          "label": "GEAR",
+          "data": 		[]
+               }
+              ]
+          }
+  },
+  {
+    "value": "voltage",
+    "label": "Voltage (V)",
+    "average": 1,
+    "data": 	{
+      "datasets": 	[
+              {
+          "value": "AIN1",
+          "label": "AIN1",
+          "data": 		[]
+               },
+               {
+          "value": "AIN2",
+          "label": "AIN2",
+          "data": 		[]
+               },
+               {
+          "value": "AIN3",
+          "label": "AIN3",
+          "data": 		[]
+               },
+               {
+          "value": "AIN4",
+          "label": "AIN4",
+          "data": 		[]
+               },
+               {
+          "value": "AIN5",
+          "label": "AIN5",
+          "data": 		[]
+               },
+               {
+          "value": "AIN6",
+          "label": "AIN6",
+          "data": 		[]
+               },
+               {
+          "value": "BATT",
+          "label": "BATT",
+          "data": 		[]
+               }
+              ]
+          }
+  },
+  {
+    "value": "temperature",
+    "label": "Temperature (C)",
+    "average": 1,
+    "data": 	{
+      "datasets": 	[
+              {
+          "value": "OILT",
+          "label": "OILT",
+          "data": 		[]
+              },
+               {
+          "value": "CLT",
+          "label": "CLT",
+          "data": 		[]
+               },
+               {
+          "value": "IAT",
+          "label": "IAT",
+          "data": 		[]
+               }
+              ]
+          }
+  },
+  {
+    "value": "LAMBDA",
+    "label": "LAMBDA",
+    "average": 1,
+    "data": 	{
+      "datasets": 	[
+              {
+          "value": "LAMBDA",
+          "label": "LAMBDA",
+          "data": 		[]
+               }
+              ]
+          }
+  }
+ ]
+ 
 let event_source = null;
 
+function averageData(dataValue, average){
+  const averagePerInterval = [];
+  let sum = 0;
+  let count = 0;
+  let currentInterval = Math.floor(new Date(dataValue[0].x).getTime() / 1000); // Initial interval
+
+  for (const item of dataValue) {
+    const timestampInSeconds = Math.floor(new Date(item.x).getTime() / 1000);
+    
+    if (timestampInSeconds - currentInterval < average) {
+      sum += item.y;
+      count++;
+    } else {
+      // Calculate average for the previous interval
+      if (count > 0) {
+        averagePerInterval.push({
+          x: new Date(currentInterval * 1000).toISOString(),
+          y: sum / count,
+        });
+      }
+
+      // Reset sum and count for the new interval
+      sum = item.y;
+      count = 1;
+      currentInterval = timestampInSeconds;
+    }
+  }
+
+  // Calculate average for the last interval (if any data)
+  if (count > 0) {
+    averagePerInterval.push({
+      x: new Date(currentInterval * 1000).toISOString(),
+      y: sum / count,
+    });
+  }
+
+  return averagePerInterval;
+}
+
+function combData(newData) {
+
+  //const currentTime = new Date();
+  const specificTime = new Date('2023-05-13T10:10:00.000000');
+  const window = new Date(specificTime.getTime() - windowTime * 60 * 1000); // Five minutes ago as a Date object
+  var dataValue;
+
+  for (var i = 0; i < graphData.length; i++){
+    var entry = graphData[i];
+    try {
+      var trialData = JSON.parse(newData);
+      //processData(trialData);
+    } catch (error) {
+      console.error('Error parsing event data:', error);
+    }
+  
+      for (var j = 0; j < entry.data.datasets.length; j++){
+        var dataset = entry.data.datasets[j];
+        var datasetValue = dataset.value;
+
+        entry.data.datasets[j].data = entry.data.datasets[j].data.filter((data) => {
+          const dataTimestamp = new Date(data.x);
+          return dataTimestamp >= window;
+        });
+        
+        if (trialData.hasOwnProperty(datasetValue)) {
+  
+          dataValue = trialData[datasetValue];
+          dataValue = averageData(dataValue, entry.average);
+          entry.data.datasets[j].data.push(...dataValue);
+          
+      }
+
+      for (var c = 0; c < myChart.data.datasets.length; c++){
+        myChart.data.datasets[c].data = myChart.data.datasets[c].data.filter((data) => {
+          const dataTimestamp = new Date(data.x);
+          return dataTimestamp >= window;
+        });
+        
+        if (datasetValue === myChart.data.datasets[c].value && trialData.hasOwnProperty(datasetValue)) {
+          console.log(dataValue);
+          myChart.data.datasets[c].data.push(...dataValue); 
+      }
+    
+  }
+        
+       
+    }
+  }
+}
 
 function StartRetrievingData()
 {    
+  console.log("Retrieving Data...");
   event_source = new EventSource('event_data');
   event_source.onmessage = (event) => {
-    console.log(event.data)
+    console.log(event.data);
+    combData(event.data);
+    myChart.update();
   };
 
   event_source.onerror = (err) => {
@@ -21,174 +275,7 @@ function StopRetrievingData()
 
 var dark = false;
 
-var graphData = [  
-{    "value": "Empty",    "label": "None Selected"},
-{
- "value": "percentage",
- "label": "Percentage (%)",
- "data": 	{
-   "datasets": 	[
-           {
-       "value": "TPS",
-       "label": "TPS",
-       "data": 		[
-        {"x": "2022-05-03T00:00:00Z", "y": 50},
-        {"x": "2022-05-03T00:01:00Z", "y": 55},
-        {"x": "2022-05-03T00:02:00Z", "y": 65},
-        {"x": "2022-05-03T00:03:00Z", "y": 70},
-        {"x": "2022-05-03T00:04:00Z", "y": 60},
-        {"x": "2022-05-03T00:05:00Z", "y": 45},
-        {"x": "2022-05-03T00:06:00Z", "y": 50},
-        {"x": "2022-05-03T00:07:00Z", "y": 55},
-        {"x": "2022-05-03T00:08:00Z", "y": 65},
-        {"x": "2022-05-03T00:09:00Z", "y": 70},
-        {"x": "2022-05-03T00:10:00Z", "y": 60}
-
-     ]
-               }
-           ]
-       }
-},
- {
-   "value": "temperature",
-   "label": "Temperature (C)",
-   "data": 	{
-     "datasets": 	[
-             {
-         "value": "OILT",
-         "label": "OILT",
-         "data": 		[
-           {"x": "2022-01-01T23:00:00Z", "y": 60},
-           {"x": "2022-01-01T23:01:00Z", "y": 55},
-           {"x": "2022-01-01T23:02:00Z", "y": 65},
-           {"x": "2022-01-01T23:03:00Z", "y": 70},
-           {"x": "2022-01-01T23:04:00Z", "y": 80},
-           {"x": "2022-01-01T23:05:00Z", "y": 90},
-           {"x": "2022-01-01T23:06:00Z", "y": 70},
-           {"x": "2022-01-01T23:07:00Z", "y": 60},
-           {"x": "2022-01-01T23:08:00Z", "y": 50},
-           {"x": "2022-01-01T23:09:00Z", "y": 40},
-           {"x": "2022-01-01T23:11:00Z", "y": 55},
-           {"x": "2022-01-01T23:12:00Z", "y": 45},
-           {"x": "2022-01-01T23:13:00Z", "y": 60},
-           {"x": "2022-01-01T23:14:00Z", "y": 75},
-           {"x": "2022-01-01T23:15:00Z", "y": 80},
-           {"x": "2022-01-01T23:16:00Z", "y": 70},
-           {"x": "2022-01-01T23:17:00Z", "y": 65},
-           {"x": "2022-01-01T23:18:00Z", "y": 55},
-           {"x": "2022-01-01T23:19:00Z", "y": 50},
-           {"x": "2022-01-01T23:20:00Z", "y": 45},
-           {"x": "2022-01-01T23:21:00Z", "y": 60},
-           {"x": "2022-01-01T23:22:00Z", "y": 55},
-           {"x": "2022-01-01T23:23:00Z", "y": 65},
-           {"x": "2022-01-01T23:24:00Z", "y": 70},
-           {"x": "2022-01-01T23:25:00Z", "y": 80},
-           {"x": "2022-01-01T23:26:00Z", "y": 90},
-           {"x": "2022-01-01T23:27:00Z", "y": 70},
-           {"x": "2022-01-01T23:28:00Z", "y": 60},
-           {"x": "2022-01-01T23:29:00Z", "y": 50},
-           {"x": "2022-01-01T23:30:00Z", "y": 40},
-           {"x": "2022-01-01T23:31:00Z", "y": 55},
-           {"x": "2022-01-01T23:32:00Z", "y": 45},
-           {"x": "2022-01-01T23:33:00Z", "y": 60},
-           {"x": "2022-01-01T23:34:00Z", "y": 75},
-           {"x": "2022-01-01T23:35:00Z", "y": 80},
-           {"x": "2022-01-01T23:36:00Z", "y": 70},
-           {"x": "2022-01-01T23:37:00Z", "y": 65},
-           {"x": "2022-01-01T23:38:00Z", "y": 55},
-           {"x": "2022-01-01T23:39:00Z", "y": 50},
-           {"x": "2022-01-01T23:40:00Z", "y": 45}
-       ]
-                 },
-       {
-         "value": "CLT",
-         "label": "CLT",
-         "data": 		[
-           {"x": "2022-01-01T23:00:00Z", "y": 50},
-           {"x": "2022-01-01T23:01:00Z", "y": 55},
-           {"x": "2022-01-01T23:02:00Z", "y": 55},
-           {"x": "2022-01-01T23:03:00Z", "y": 60},
-           {"x": "2022-01-01T23:04:00Z", "y": 70},
-           {"x": "2022-01-01T23:05:00Z", "y": 80},
-           {"x": "2022-01-01T23:06:00Z", "y": 60},
-           {"x": "2022-01-01T23:07:00Z", "y": 55},
-           {"x": "2022-01-01T23:09:00Z", "y": 45},
-           {"x": "2022-01-01T23:10:00Z", "y": 40},
-           {"x": "2022-01-01T23:11:00Z", "y": 45},
-           {"x": "2022-01-01T23:12:00Z", "y": 60},
-           {"x": "2022-01-01T23:13:00Z", "y": 65},
-           {"x": "2022-01-01T23:14:00Z", "y": 80},
-           {"x": "2022-01-01T23:15:00Z", "y": 85},
-           {"x": "2022-01-01T23:16:00Z", "y": 80},
-           {"x": "2022-01-01T23:17:00Z", "y": 65},
-           {"x": "2022-01-01T23:18:00Z", "y": 55},
-           {"x": "2022-01-01T23:19:00Z", "y": 40},
-           {"x": "2022-01-01T23:20:00Z", "y": 35},
-           {"x": "2022-01-01T23:21:00Z", "y": 40},
-           {"x": "2022-01-01T23:22:00Z", "y": 55},
-           {"x": "2022-01-01T23:23:00Z", "y": 65},
-           {"x": "2022-01-01T23:24:00Z", "y": 70},
-           {"x": "2022-01-01T23:25:00Z", "y": 75},
-           {"x": "2022-01-01T23:26:00Z", "y": 80},
-           {"x": "2022-01-01T23:27:00Z", "y": 75},
-           {"x": "2022-01-01T23:28:00Z", "y": 65},
-           {"x": "2022-01-01T23:29:00Z", "y": 55},
-           {"x": "2022-01-01T23:30:00Z", "y": 45},
-           {"x": "2022-01-01T23:31:00Z", "y": 50},
-           {"x": "2022-01-01T23:32:00Z", "y": 40},
-           {"x": "2022-01-01T23:33:00Z", "y": 65},
-           {"x": "2022-01-01T23:34:00Z", "y": 75},
-           {"x": "2022-01-01T23:35:00Z", "y": 85},
-           {"x": "2022-01-01T23:36:00Z", "y": 75},
-           {"x": "2022-01-01T23:37:00Z", "y": 60},
-           {"x": "2022-01-01T23:38:00Z", "y": 50},
-           {"x": "2022-01-01T23:39:00Z", "y": 55},
-           {"x": "2022-01-01T23:40:00Z", "y": 40},
-           {"x": "2022-01-01T23:41:00Z", "y": 65},
-           {"x": "2022-01-01T23:42:00Z", "y": 50},
-           {"x": "2022-01-01T23:43:00Z", "y": 60},
-           {"x": "2022-01-01T23:44:00Z", "y": 75},
-           {"x": "2022-01-01T23:45:00Z", "y": 85},
-           {"x": "2022-01-01T23:46:00Z", "y": 95},
-           {"x": "2022-01-01T23:47:00Z", "y": 75},
-           {"x": "2022-01-01T23:48:00Z", "y": 65},
-           {"x": "2022-01-01T23:49:00Z", "y": 55},
-           {"x": "2022-01-01T23:50:00Z", "y": 65}
-       ]
-                 },
-       {
-         "value": "IAT",
-         "label": "IAT",
-         "data": 		[
-              {"x": "2022-01-02T00:00:00+01:00", "y": 60},
-    {"x": "2022-01-02T00:01:00+01:00", "y": 55},
-    {"x": "2022-01-02T00:02:00+01:00", "y": 65},
-    {"x": "2022-01-02T00:03:00+01:00", "y": 70},
-    {"x": "2022-01-02T00:04:00+01:00", "y": 80},
-    {"x": "2022-01-02T00:05:00+01:00", "y": 90},
-    {"x": "2022-01-02T00:06:00+01:00", "y": 70},
-    {"x": "2022-01-02T00:07:00+01:00", "y": 60},
-    {"x": "2022-01-02T00:08:00+01:00", "y": 50},
-    {"x": "2022-01-02T00:09:00+01:00", "y": 40},
-    {"x": "2022-01-02T00:11:00+01:00", "y": 55},
-    {"x": "2022-01-02T00:12:00+01:00", "y": 45},
-    {"x": "2022-01-02T00:13:00+01:00", "y": 60},
-    {"x": "2022-01-02T00:14:00+01:00", "y": 75},
-    {"x": "2022-01-02T00:15:00+01:00", "y": 80},
-    {"x": "2022-01-02T00:16:00+01:00", "y": 70},
-    {"x": "2022-01-02T00:17:00+01:00", "y": 65},
-    {"x": "2022-01-02T00:18:00+01:00", "y": 55},
-    {"x": "2022-01-02T00:19:00+01:00", "y": 50},
-    {"x": "2022-01-02T00:20:00+01:00", "y": 45},
-    {"x": "2022-01-02T00:21:00+01:00", "y": 60},
-    {"x": "2022-01-02T00:22:00+01:00", "y": 55},
-    {"x": "2022-01-02T00:23:00+01:00", "y": 65}
-       ]
-                 }
-             ]
-         }
- }
-]
+ 
 
 function toggleData(divID, button, value){
 const visibilityData = myChart.isDatasetVisible(value);
@@ -210,17 +297,18 @@ interaction: {
   mode: 'x',
 },
 scales: {
-x: {
-  ticks: {color: '#81C8BD'},
-  grid: {color: '#81C8BD'},
-  position: 'top',
-  type: 'time',
-time: {
-unit: 'minute',
-displayFormats: {
-hour:'HH:mm:ss.SSS',
-},}
-},
+  x: {
+    ticks: {color: 'white'},
+    grid: {color: 'white'},
+    position: 'top',
+    type: 'time',
+    time: {
+      unit: 'second',
+      displayFormats: {
+      hour:'HH:mm:ss',
+      'second': 'HH:mm:ss',
+      },}
+  },
 y1: {
   ticks: {color: '#81C8BD'},
   grid: {color: '#81C8BD'},
@@ -263,19 +351,18 @@ interaction: {
   mode: 'x',
 },
 scales: {
-x: {
-  ticks: {color: 'white'},
-  grid: {color: 'white'},
-  position: 'top',
-  type: 'time',
-time: {
-unit: 'minute',
-displayFormats: {
-hour:'HH:mm:ss.SSS',
-'minute': 'HH:mm',
-},
-timezone: 'Europe/Amsterdam'}
-},
+  x: {
+    ticks: {color: 'white'},
+    grid: {color: 'white'},
+    position: 'top',
+    type: 'time',
+    time: {
+      unit: 'second',
+      displayFormats: {
+      hour:'HH:mm:ss',
+      'second': 'HH:mm:ss',
+      },}
+  },
 y1: {
   ticks: {color: 'white'},
   grid: {color: 'white'},
@@ -317,13 +404,8 @@ var ctx = document.getElementById('myChart').getContext('2d');
 
   });
 
-  
-const chartContainer = document.getElementById('dataGraph');
-//if(myChart.data.datasets[0].data.length > 3){
-chartContainer.style.width = '2000px';
-myChart.resize(2000, null);
 
-//}
+
 
 
   function getRandomColor() {
@@ -344,6 +426,7 @@ if(selectID === 'y4'){return document.getElementById("y4Legend");}
 }
 
 function updateGraph(selectID) {
+  console.log(selectID);
   var selectBox = document.getElementById(selectID);
   var selectedValue = selectBox.options[selectBox.selectedIndex].value;
   var divID = checkID(selectID);
@@ -404,11 +487,11 @@ function updateGraph(selectID) {
 
           myChart.data.datasets.push(newDataset);
           //console.log(myChart.data.datasets.length-1);
-
+          /*
           if(newDataset.value === "CLT" || newDataset.value === "OILT"){
             displayMostRecentData(newDataset);
           }
-          
+          */
         }); 
            
         //document.getElementById('0').innerText = myChart.data.datasets[0].label;
@@ -419,6 +502,7 @@ function updateGraph(selectID) {
               dataset.hidden = true;
           });
           myChart.update();
+          console.log(myChart.data);
       }
 }
 
