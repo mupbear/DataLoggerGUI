@@ -1,7 +1,7 @@
 {
   "car_name":"RaceCar01",
-  "minimum_timestamp":"2023-05-13 10:00:00.0000000",
-  "maximum_timestamp":"2023-05-13 10:10:00.0000000",
+  "minimum_timestamp":"2023-10-08 10:00:00.0000000",
+  "maximum_timestamp":"2023-10-10 10:00:00.0000000",
   "sensors":{
     "1538":[
       {
@@ -36,6 +36,30 @@
         "multiplier":1.0,
         "offset":0.0,
         "unit":"\u00b0C"
+      }
+    ],
+    "1025":[
+      {
+        "sensor_name":"SPEED",
+        "byte_offset":0.0,
+        "byte_width":2.0,
+        "signed":true,
+        "minimum_value":0,
+        "maximum_value":240,
+        "multiplier":0.036,
+        "offset":0,
+        "unit":"kmph"
+      },
+      {
+        "sensor_name":"SGPS",
+        "byte_offset":0.0,
+        "byte_width":0.375,
+        "signed":false,
+        "minimum_value":0.0,
+        "maximum_value":1,
+        "multiplier":1,
+        "offset":0.0,
+        "unit":"Bar"
       }
     ]
   }

@@ -16,14 +16,14 @@ var graphData = [
           }
    },
   {
-   "value": "percentage",
-   "label": "Percentage (%)",
+   "value": "speed",
+   "label": "Speed (KM/H)",
    "average": 1,
    "data": 	{
      "datasets": 	[
              {
-         "value": "TPS",
-         "label": "TPS",
+         "value": "SPEED",
+         "label": "SPEED",
          "data": 		[]
               }
              ]
@@ -41,80 +41,8 @@ var graphData = [
           "data": 		[]
                },
                {
-          "value": "FUELP",
-          "label": "FUELP",
-          "data": 		[]
-               }
-              ]
-          }
-  },
-  {
-    "value": "RPM",
-    "label": "RPM",
-    "average": 1,
-    "data": 	{
-      "datasets": 	[
-              {
-          "value": "RPM",
-          "label": "RPM",
-          "data": 		[]
-               }
-              ]
-          }
-  },
-  {
-    "value": "gear",
-    "label": "Gear (Position)",
-    "average": 1,
-    "data": 	{
-      "datasets": 	[
-              {
-          "value": "GEAR",
-          "label": "GEAR",
-          "data": 		[]
-               }
-              ]
-          }
-  },
-  {
-    "value": "voltage",
-    "label": "Voltage (V)",
-    "average": 1,
-    "data": 	{
-      "datasets": 	[
-              {
-          "value": "AIN1",
-          "label": "AIN1",
-          "data": 		[]
-               },
-               {
-          "value": "AIN2",
-          "label": "AIN2",
-          "data": 		[]
-               },
-               {
-          "value": "AIN3",
-          "label": "AIN3",
-          "data": 		[]
-               },
-               {
-          "value": "AIN4",
-          "label": "AIN4",
-          "data": 		[]
-               },
-               {
-          "value": "AIN5",
-          "label": "AIN5",
-          "data": 		[]
-               },
-               {
-          "value": "AIN6",
-          "label": "AIN6",
-          "data": 		[]
-               },
-               {
-          "value": "BATT",
-          "label": "BATT",
+          "value": "SGPS",
+          "label": "SGPS",
           "data": 		[]
                }
               ]
@@ -134,25 +62,6 @@ var graphData = [
                {
           "value": "CLT",
           "label": "CLT",
-          "data": 		[]
-               },
-               {
-          "value": "IAT",
-          "label": "IAT",
-          "data": 		[]
-               }
-              ]
-          }
-  },
-  {
-    "value": "LAMBDA",
-    "label": "LAMBDA",
-    "average": 1,
-    "data": 	{
-      "datasets": 	[
-              {
-          "value": "LAMBDA",
-          "label": "LAMBDA",
           "data": 		[]
                }
               ]
@@ -204,7 +113,7 @@ function averageData(dataValue, average){
 function combData(newData) {
 
   //const currentTime = new Date();
-  const specificTime = new Date('2023-05-13T10:10:00.000000');
+  const specificTime = new Date('2023-07-31T18:10:00.000000');
   const window = new Date(specificTime.getTime() - windowTime * 60 * 1000); // Five minutes ago as a Date object
   var dataValue;
 
