@@ -112,9 +112,9 @@ function averageData(dataValue, average){
 
 function combData(newData) {
 
-  //const currentTime = new Date();
-  const specificTime = new Date('2023-07-31T18:10:00.000000');
-  const window = new Date(specificTime.getTime() - windowTime * 60 * 1000); // Five minutes ago as a Date object
+  const currentTime = new Date();
+  //const specificTime = new Date('2023-05-13T10:10:00.000000');
+  const window = new Date(currentTime.getTime() - windowTime * 60 * 1000); // Five minutes ago as a Date object
   var dataValue;
 
   for (var i = 0; i < graphData.length; i++){

@@ -12,9 +12,8 @@ authors = [
 
 dependencies = [
   "aiofiles",
-  "litestar",
   "uvicorn[standard]",
-  "litestar[jinja]",
+  "litestar[jinja] == 2.0.0a4",
   "aiomysql"
 ]
 
