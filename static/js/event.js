@@ -49,6 +49,35 @@ var graphData = [
           }
   },
   {
+    "value": "voltage",
+    "label": "Voltage (V)",
+    "average": 1,
+    "data": 	{
+      "datasets": 	[
+              {
+          "value": "AIN1",
+          "label": "AIN1",
+          "data": 		[]
+               },
+               {
+          "value": "AIN2",
+          "label": "AIN2",
+          "data": 		[]
+               },
+               {
+          "value": "AIN3",
+          "label": "AIN3",
+          "data": 		[]
+               },
+               {
+          "value": "AIN4",
+          "label": "AIN4",
+          "data": 		[]
+               }
+              ]
+          }
+  },
+  {
     "value": "temperature",
     "label": "Temperature (C)",
     "average": 1,
@@ -62,6 +91,11 @@ var graphData = [
                {
           "value": "CLT",
           "label": "CLT",
+          "data": 		[]
+               },
+               {
+          "value": "DIFFT",
+          "label": "DIFFT",
           "data": 		[]
                }
               ]
@@ -109,7 +143,7 @@ function averageData(dataValue, average){
 
   return averagePerInterval;
 }
-
+//T = -40 * V + 200
 function combData(newData) {
 
   const currentTime = new Date();
@@ -136,7 +170,10 @@ function combData(newData) {
         });
         
         if (trialData.hasOwnProperty(datasetValue)) {
-  
+          if(datasetValue == "AIN3")
+          {
+
+          }
           dataValue = trialData[datasetValue];
           dataValue = averageData(dataValue, entry.average);
           entry.data.datasets[j].data.push(...dataValue);

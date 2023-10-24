@@ -1,8 +1,54 @@
 {
   "car_name":"RaceCar01",
-  "minimum_timestamp":"2023-10-08 10:00:00.0000000",
-  "maximum_timestamp":"2023-10-10 10:00:00.0000000",
+  "minimum_timestamp":"2023-10-25 05:00:00.0000000",
+  "maximum_timestamp":"2023-10-26 12:00:00.0000000",
   "sensors":{
+    "1537":[
+      {
+        "sensor_name":"AIN1",
+        "byte_offset":0.0,
+        "byte_width":2.0,
+        "signed":false,
+        "minimum_value":0.0,
+        "maximum_value":5.0,
+        "multiplier":0.0048828125,
+        "offset":0.0,
+        "unit":"V"
+      },
+      {
+        "sensor_name":"AIN2",
+        "byte_offset":2.0,
+        "byte_width":2.0,
+        "signed":false,
+        "minimum_value":0.0,
+        "maximum_value":5.0,
+        "multiplier":0.0048828125,
+        "offset":0.0,
+        "unit":"V"
+      },
+      {
+        "sensor_name":"AIN3",
+        "byte_offset":4.0,
+        "byte_width":2.0,
+        "signed":false,
+        "minimum_value":0.0,
+        "maximum_value":5.0,
+        "multiplier":0.0048828125,
+        "offset":0.0,
+        "unit":"V"
+      },
+      {
+        "sensor_name":"AIN4",
+        "byte_offset":6.0,
+        "byte_width":2.0,
+        "signed":false,
+        "minimum_value":0.0,
+        "maximum_value":5.0,
+        "multiplier":0.0048828125,
+        "offset":0.0,
+        "unit":"V"
+      }
+    ],
     "1538":[
       {
         "sensor_name":"OILT",
@@ -49,17 +95,6 @@
         "multiplier":0.036,
         "offset":0,
         "unit":"kmph"
-      },
-      {
-        "sensor_name":"SGPS",
-        "byte_offset":7.0,
-        "byte_width":0.375,
-        "signed":false,
-        "minimum_value":1.0,
-        "maximum_value":5.0,
-        "multiplier":1,
-        "offset":0.0,
-        "unit":"Bar"
       }
     ]
   }
