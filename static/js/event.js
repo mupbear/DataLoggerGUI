@@ -16,20 +16,6 @@ var graphData = [
           }
    },
   {
-   "value": "speed",
-   "label": "Speed (KM/H)",
-   "average": 1,
-   "data": 	{
-     "datasets": 	[
-             {
-         "value": "SPEED",
-         "label": "SPEED",
-         "data": 		[]
-              }
-             ]
-         }
-  },
-  {
     "value": "pressure",
     "label": "Pressure (Bar)",
     "average": 1,
@@ -38,11 +24,6 @@ var graphData = [
               {
           "value": "OILP",
           "label": "OILP",
-          "data": 		[]
-               },
-               {
-          "value": "SGPS",
-          "label": "SGPS",
           "data": 		[]
                }
               ]
@@ -54,24 +35,9 @@ var graphData = [
     "average": 1,
     "data": 	{
       "datasets": 	[
-              {
-          "value": "AIN1",
-          "label": "AIN1",
-          "data": 		[]
-               },
-               {
-          "value": "AIN2",
-          "label": "AIN2",
-          "data": 		[]
-               },
                {
           "value": "AIN3",
           "label": "AIN3",
-          "data": 		[]
-               },
-               {
-          "value": "AIN4",
-          "label": "AIN4",
           "data": 		[]
                }
               ]

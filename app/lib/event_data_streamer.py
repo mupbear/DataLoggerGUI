@@ -22,10 +22,10 @@ class EventConfig:
   def __init__(self, event_config):
     assert({"car_name", "minimum_timestamp", "maximum_timestamp", "sensors"} <= set(event_config))
     self.car_name = event_config["car_name"]
-    #self.minimum_timestamp = event_config["minimum_timestamp"]
-    ts = time.time()
-    current_time = datetime.fromtimestamp(ts)
-    self.minimum_timestamp = current_time
+    self.minimum_timestamp = event_config["minimum_timestamp"]
+    #ts = time.time()
+    #current_time = datetime.fromtimestamp(ts)
+    #self.minimum_timestamp = current_time
     self.maximum_timestamp = event_config["maximum_timestamp"]
     self.can_ids = list(event_config["sensors"])
     self.sensor_config = event_config["sensors"]
@@ -107,6 +107,7 @@ class EventDataStreamer:
           
         
     return value_by_sensor_name
+
 
 
 
