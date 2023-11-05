@@ -6,7 +6,6 @@ To do:
 */
 var windowTime = 5; //window in minutes
 
-
 var graphData = [  
   {
     "value": "empty",
@@ -109,13 +108,15 @@ function averageData(dataValue, average){
 
   return averagePerInterval;
 }
-//T = -40 * V + 200
+
 function combData(newData) {
 
   const currentTime = new Date();
+  //currentTime = currentTime.getTime() - 3600
   //const specificTime = new Date('2023-05-13T10:10:00.000000');
   const window = new Date(currentTime.getTime() - windowTime * 60 * 1000); // Five minutes ago as a Date object
   var dataValue;
+  var diffValue;
 
   for (var i = 0; i < graphData.length; i++){
     var entry = graphData[i];
@@ -136,13 +137,22 @@ function combData(newData) {
         });
         
         if (trialData.hasOwnProperty(datasetValue)) {
-          if(datasetValue == "AIN3")
+          /*if(datasetValue == "AIN3")
           {
-
-          }
+            analogValue = trialData[datasetValue];
+            diffValue = averageData(diffValue, entry.average);
+            diffValue = analogValue.map(dataPoint => ({
+              ...dataPoint,
+              y: -0.2169*(dataPoint.y**6) + 3.5443*(dataPoint.y**5) - 21.805*(dataPoint.y**4) + 59.556*(dataPoint.y**3) - 57.12*(dataPoint.y**2) - 55.371*dataPoint.y + 201.11
+            }));
+            
+            console.log(diffValue[0].y)
+            graphData[3].data.datasets[2].data.push(...diffValue);
+          }*/
           dataValue = trialData[datasetValue];
           dataValue = averageData(dataValue, entry.average);
           entry.data.datasets[j].data.push(...dataValue);
+          console.log(datasetValue+': '+dataValue[0].y);
           
       }
 
@@ -151,9 +161,11 @@ function combData(newData) {
           const dataTimestamp = new Date(data.x);
           return dataTimestamp >= window;
         });
-        
+        //if ("DIFFT" === myChart.data.datasets[c].value && trialData.hasOwnProperty("AIN3")) {
+        //  myChart.data.datasets[c].data.push(...diffValue); 
+        //}
         if (datasetValue === myChart.data.datasets[c].value && trialData.hasOwnProperty(datasetValue)) {
-          console.log(dataValue);
+          //console.log(dataValue);
           myChart.data.datasets[c].data.push(...dataValue); 
       }
     
@@ -338,7 +350,7 @@ if(selectID === 'y4'){return document.getElementById("y4Legend");}
 }
 
 function updateGraph(selectID) {
-  console.log(selectID);
+  //console.log(selectID);
   var selectBox = document.getElementById(selectID);
   var selectedValue = selectBox.options[selectBox.selectedIndex].value;
   var divID = checkID(selectID);
@@ -414,7 +426,7 @@ function updateGraph(selectID) {
               dataset.hidden = true;
           });
           myChart.update();
-          console.log(myChart.data);
+          //console.log(myChart.data);
       }
 }
 
@@ -425,7 +437,7 @@ var mostRecent = newDataset.data[newDataset.data.length-1];
 
 const y = mostRecent.y;
 var x = mostRecent.x;
-console.log(x);
+//console.log(x);
     x = formatDate(x);
     
 if(newDataset.value === "OILT"){
@@ -441,7 +453,7 @@ if(newDataset.value === "CLT"){
 
 function formatDate(dateTimeStr) {
 const date = new Date(dateTimeStr);
-console.log(date);
+//console.log(date);
 const hours = String(date.getUTCHours()).padStart(2, '0');
 const minutes = String(date.getUTCMinutes()).padStart(2, '0');
 const seconds = String(date.getUTCSeconds()).padStart(2, '0');
