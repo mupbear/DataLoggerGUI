@@ -29,20 +29,6 @@ var graphData = [
           }
   },
   {
-    "value": "voltage",
-    "label": "Voltage (V)",
-    "average": 1,
-    "data": 	{
-      "datasets": 	[
-               {
-          "value": "AIN3",
-          "label": "AIN3",
-          "data": 		[]
-               }
-              ]
-          }
-  },
-  {
     "value": "temperature",
     "label": "Temperature (C)",
     "average": 1,
@@ -56,11 +42,6 @@ var graphData = [
                {
           "value": "CLT",
           "label": "CLT",
-          "data": 		[]
-               },
-               {
-          "value": "DIFFT",
-          "label": "DIFFT",
           "data": 		[]
                }
               ]
@@ -137,18 +118,19 @@ function combData(newData) {
         });
         
         if (trialData.hasOwnProperty(datasetValue)) {
-          /*if(datasetValue == "AIN3")
+          if(datasetValue == "AIN3")
           {
             analogValue = trialData[datasetValue];
-            diffValue = averageData(diffValue, entry.average);
+            diffValue = averageData(analogValue, entry.average);
+            
             diffValue = analogValue.map(dataPoint => ({
               ...dataPoint,
               y: -0.2169*(dataPoint.y**6) + 3.5443*(dataPoint.y**5) - 21.805*(dataPoint.y**4) + 59.556*(dataPoint.y**3) - 57.12*(dataPoint.y**2) - 55.371*dataPoint.y + 201.11
             }));
             
-            console.log(diffValue[0].y)
+            //console.log(diffValue)
             graphData[3].data.datasets[2].data.push(...diffValue);
-          }*/
+          }
           dataValue = trialData[datasetValue];
           dataValue = averageData(dataValue, entry.average);
           entry.data.datasets[j].data.push(...dataValue);
@@ -161,12 +143,12 @@ function combData(newData) {
           const dataTimestamp = new Date(data.x);
           return dataTimestamp >= window;
         });
-        //if ("DIFFT" === myChart.data.datasets[c].value && trialData.hasOwnProperty("AIN3")) {
-        //  myChart.data.datasets[c].data.push(...diffValue); 
-        //}
+        
         if (datasetValue === myChart.data.datasets[c].value && trialData.hasOwnProperty(datasetValue)) {
           //console.log(dataValue);
           myChart.data.datasets[c].data.push(...dataValue); 
+      }else if ("DIFFT" === myChart.data.datasets[c].value && trialData.hasOwnProperty("AIN3")) {
+        myChart.data.datasets[c].data.push(...diffValue); 
       }
     
   }
