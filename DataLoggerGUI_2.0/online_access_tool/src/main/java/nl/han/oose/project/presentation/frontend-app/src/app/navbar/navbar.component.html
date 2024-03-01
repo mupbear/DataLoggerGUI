@@ -1,0 +1,42 @@
+<!-- Add this line to link your CSS file -->
+<link rel="stylesheet" href="./navbar.component.css">
+
+<nav class="navbar is-rounded" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item" (click)="navigate('')">
+      <img src="https://regterschotracing.com/wp-content/uploads/2022/06/Regterschot-Racing-kleur-1024x150.png"
+           alt="Regterschot Logo">
+    </a>
+    <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample" (click)="toggleMenu()">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div id="navbarBasicExample" class="navbar-menu" [ngClass]="{ 'is-active': isMenuOpen }">
+    <div class="navbar-start">
+      <a class="navbar-item custom-button has-text-custom" (click)="navigate('')">Home</a>
+      <a class="navbar-item custom-button has-text-custom" (click)="navigate('1538')">Oil t/p</a>
+      <a class="navbar-item custom-button has-text-custom" (click)="navigate('1536')">Car info</a>
+      <a class="navbar-item custom-button has-text-custom" (click)="navigate('1540')">ECU & Bat</a>
+      <a class="navbar-item custom-button has-text-custom" (click)="navigate('1541')">Miscellaneous</a>
+      <a class="navbar-item custom-button has-text-custom" (click)="navigate('1543')">Boost and PWM</a>
+      <app-carpicker></app-carpicker>
+    </div>
+    <div class="navbar-end">
+      <div class="navbar-item">
+        <div class="buttons">
+          <a class="button has-text-custom button-has-shadow" (click)="$event.preventDefault(); logOut()">Log out</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    // Trigger the animation by adding a class to the navbar items
+    document.querySelectorAll('.navbar-item').forEach(function(item) {
+      item.classList.add('slide-in');
+    });
+  });
+</script>

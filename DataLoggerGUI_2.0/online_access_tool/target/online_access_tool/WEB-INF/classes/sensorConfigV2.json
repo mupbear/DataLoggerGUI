@@ -1,0 +1,329 @@
+{
+  "carName": "RaceCar01",
+  "minimumTimestamp": "2023-11-05 07:00:00.0000000",
+  "maximumTimestamp": "2023-11-05 23:59:00.0000000",
+  "sensors": {
+    "1536": [
+      {
+        "sensor_name": "RPM",
+        "byte_offset": 0,
+        "byte_width": 3,
+        "signed": false,
+        "minimum_value": 0,
+        "maximum_value": 16000,
+        "multiplier": 1.0,
+        "offset": 0,
+        "unit": "RPM"
+      },
+      {
+        "sensor_name": "TPS",
+        "byte_offset": 2,
+        "byte_width": 1,
+        "signed": false,
+        "minimum_value": 0,
+        "maximum_value": 100,
+        "multiplier": 0.5,
+        "offset": 0,
+        "unit": "%"
+      },
+      {
+        "sensor_name": "IAT",
+        "byte_offset": 3,
+        "byte_width": 1,
+        "signed": true,
+        "minimum_value": -40,
+        "maximum_value": 127,
+        "multiplier": 1.0,
+        "offset": 0,
+        "unit": "°C"
+      },
+      {
+        "sensor_name": "MAP",
+        "byte_offset": 4,
+        "byte_width": 2,
+        "signed": false,
+        "minimum_value": 0,
+        "maximum_value": 600,
+        "multiplier": 1.0,
+        "offset": 0,
+        "unit": "kPa"
+      },
+      {
+        "sensor_name": "INJPW",
+        "byte_offset": 6,
+        "byte_width": 2,
+        "signed": false,
+        "minimum_value": 0,
+        "maximum_value": 50,
+        "multiplier": 0.016129,
+        "offset": 0,
+        "unit": "ms"
+      }
+    ],
+    "1537":[
+      {
+        "sensor_name":"AIN3",
+        "byte_offset":4,
+        "byte_width":2,
+        "signed":false,
+        "minimum_value":0,
+        "maximum_value":5,
+        "multiplier":0.0048828125,
+        "offset":0,
+        "unit":"V"
+      }
+    ],
+    "1538": [
+      {
+        "sensor_name": "BARO",
+        "byte_offset": 2,
+        "byte_width": 1,
+        "signed": false,
+        "minimum_value": 50,
+        "maximum_value": 130,
+        "multiplier": 1.0,
+        "offset": 0,
+        "unit": "kPa"
+      },
+      {
+        "sensor_name": "OILT",
+        "byte_offset": 3,
+        "byte_width": 1,
+        "signed": false,
+        "minimum_value": 0,
+        "maximum_value": 160,
+        "multiplier": 1.0,
+        "offset": 0,
+        "unit": "°C"
+      },
+      {
+        "sensor_name": "OILP",
+        "byte_offset": 4,
+        "byte_width": 1,
+        "signed": false,
+        "minimum_value": 0,
+        "maximum_value": 12,
+        "multiplier": 0.0625,
+        "offset": 0,
+        "unit": "Bar"
+      }
+    ],
+    "1539": [
+      {
+        "sensor_name": "IGNANG",
+        "byte_offset": 0,
+        "byte_width": 1,
+        "signed": true,
+        "minimum_value": -60,
+        "maximum_value": 60,
+        "multiplier": 0.5,
+        "offset": 0,
+        "unit": "Deg"
+      },
+      {
+        "sensor_name": "DWELL",
+        "byte_offset": 1,
+        "byte_width": 1,
+        "signed": false,
+        "minimum_value": 0,
+        "maximum_value": 10,
+        "multiplier": 0.05,
+        "offset": 0,
+        "unit": "ms"
+      },
+      {
+        "sensor_name": "LAMBDA",
+        "byte_offset": 2,
+        "byte_width": 1,
+        "signed": false,
+        "minimum_value": 0,
+        "maximum_value": 2,
+        "multiplier": 0.0078125,
+        "offset": 0,
+        "unit": "Lambda"
+      },
+      {
+        "sensor_name": "LAMCORR",
+        "byte_offset": 3,
+        "byte_width": 1,
+        "signed": false,
+        "minimum_value": 75,
+        "maximum_value": 125,
+        "multiplier": 0.5,
+        "offset": 0,
+        "unit": "%"
+      },
+      {
+        "sensor_name": "EGT1",
+        "byte_offset": 4,
+        "byte_width": 2,
+        "signed": false,
+        "minimum_value": 0,
+        "maximum_value": 1100,
+        "multiplier": 1.0,
+        "offset": 0,
+        "unit": "°C"
+      },
+      {
+        "sensor_name": "EGT2",
+        "byte_offset": 6,
+        "byte_width": 2,
+        "signed": false,
+        "minimum_value": 0,
+        "maximum_value": 1100,
+        "multiplier": 1.0,
+        "offset": 0,
+        "unit": "°C"
+      }
+    ],
+    "1540": [
+      {
+        "sensor_name": "GEAR",
+        "byte_offset": 0,
+        "byte_width": 1,
+        "signed": false,
+        "minimum_value": 0,
+        "maximum_value": 7,
+        "multiplier": 1.0,
+        "offset": 0,
+        "unit": "No units"
+      },
+      {
+        "sensor_name": "ECUTEMP",
+        "byte_offset": 1,
+        "byte_width": 1,
+        "signed": true,
+        "minimum_value": -40,
+        "maximum_value": 120,
+        "multiplier": 1.0,
+        "offset": 0,
+        "unit": "°C"
+      },
+      {
+        "sensor_name": "BATT",
+        "byte_offset": 2,
+        "byte_width": 2,
+        "signed": false,
+        "minimum_value": 0,
+        "maximum_value": 20,
+        "multiplier": 0.027,
+        "offset": 0,
+        "unit": "V"
+      }
+    ],
+    "1541": [
+      {
+        "sensor_name": "DBW POS",
+        "byte_offset": 0,
+        "byte_width": 1,
+        "signed": false,
+        "minimum_value": 0,
+        "maximum_value": 100,
+        "multiplier": 0.5,
+        "offset": 0,
+        "unit": "%"
+      },
+      {
+        "sensor_name": "DBW TRGT",
+        "byte_offset": 1,
+        "byte_width": 1,
+        "signed": false,
+        "minimum_value": 0,
+        "maximum_value": 100,
+        "multiplier": 0.5,
+        "offset": 0,
+        "unit": "%"
+      },
+      {
+        "sensor_name": "TC DRPM RAW",
+        "byte_offset": 2,
+        "byte_width": 2,
+        "signed": true,
+        "minimum_value": 0,
+        "maximum_value": 1000,
+        "multiplier": 1.0,
+        "offset": 0
+      },
+      {
+        "sensor_name": "TC DRPM",
+        "byte_offset": 4,
+        "byte_width": 2,
+        "signed": false,
+        "minimum_value": 0,
+        "maximum_value": 400,
+        "multiplier": 1.0,
+        "offset": 0
+      },
+      {
+        "sensor_name": "TC TORQUE REDUCTION",
+        "byte_offset": 6,
+        "byte_width": 1,
+        "signed": false,
+        "minimum_value": 0,
+        "maximum_value": 100,
+        "multiplier": 1.0,
+        "offset": 0,
+        "unit": "%"
+      },
+      {
+        "sensor_name": "PIT LIMIT TORQUE REDUCTION",
+        "byte_offset": 7,
+        "byte_width": 1,
+        "signed": false,
+        "minimum_value": 0,
+        "maximum_value": 100,
+        "multiplier": 1.0,
+        "offset": 0,
+        "unit": "%"
+      }
+    ],
+    "1542": [
+      {
+        "sensor_name": "AIN #5",
+        "byte_offset": 0,
+        "byte_width": 2,
+        "signed": false,
+        "minimum_value": 0,
+        "maximum_value": 5,
+        "multiplier": 0.0048828125,
+        "offset": 0,
+        "unit": "V"
+      },
+      {
+        "sensor_name": "AIN #6",
+        "byte_offset": 2,
+        "byte_width": 2,
+        "signed": false,
+        "minimum_value": 0,
+        "maximum_value": 5,
+        "multiplier": 0.0048828125,
+        "offset": 0,
+        "unit": "V"
+      }
+    ],
+    "1543": [
+      {
+        "sensor_name": "Boost target",
+        "byte_offset": 0,
+        "byte_width": 2,
+        "signed": false,
+        "minimum_value": 0,
+        "maximum_value": 600,
+        "multiplier": 1.0,
+        "offset": 0,
+        "unit": "kPa"
+      },
+      {
+        "sensor_name": "PWM#1 DC",
+        "byte_offset": 1,
+        "byte_width": 1,
+        "signed": false,
+        "minimum_value": 0,
+        "maximum_value": 100,
+        "multiplier": 1.0,
+        "offset": 0,
+        "unit": "%"
+      }
+    ]
+  }
+}

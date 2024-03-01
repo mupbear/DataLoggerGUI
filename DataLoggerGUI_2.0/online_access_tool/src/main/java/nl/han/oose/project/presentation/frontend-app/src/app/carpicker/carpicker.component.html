@@ -1,0 +1,12 @@
+<div class="navbar-item navbar-carpicker has-dropdown is-hoverable" (click)="getAllCars()">
+  <a class="navbar-link navbar-item custom-button has-text-custom">
+    Carpicker
+  </a>
+  <div class="navbar-dropdown dropdown-custom custom-button">
+    <div class="dropdown-content">
+      <a  class="dropdown-item" *ngFor="let carName of carNames" (click)="onCarNameClick(carName)">
+        {{ carName }}
+      </a>
+    </div>
+  </div>
+</div>

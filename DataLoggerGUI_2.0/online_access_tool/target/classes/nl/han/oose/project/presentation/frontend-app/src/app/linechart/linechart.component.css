@@ -1,0 +1,32 @@
+.black-box{
+  background-color: #343740;
+  box-shadow: 4px 4px 4px 4px rgba(0,0,0, 0.1);
+  padding-top: 2rem;
+}
+
+.box-padding{
+  padding: 5px;
+}
+
+.is-custom {
+  background-color: rgba(0, 0, 0, 0.1);
+  transition: background-color 0.6s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  color: #81c8bd;
+  border-color: white;
+  box-shadow: 0px 0px 7px rgba(129, 200, 189, 10);
+  margin: 0.5rem 0.5rem 0.5rem;
+}
+
+.is-custom:hover {
+  background-color: rgba(129, 200, 189, 0.1);
+  transform: scale(1.05);
+  box-shadow: 0px 0px 10px rgba(129, 200, 189, 0.3);
+}
+
+.submitbutton {
+  padding-top: 2rem;
+}
+
+.padding {
+  padding-left: 0rem;
+}

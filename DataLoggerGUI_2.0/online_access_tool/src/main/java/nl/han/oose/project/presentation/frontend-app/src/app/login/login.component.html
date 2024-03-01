@@ -1,0 +1,51 @@
+<body class="hero is-fullheight has-background-primary">
+<div class="hero-body">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-4">
+        <div class="box">
+          <h1 class="title has-text-centered">Login</h1>
+          <error-message [errorMsg]="errorMsg" *ngIf="isUnauthorized === true"></error-message>
+          <form>
+            <div class="field">
+              <label class="label">Username</label>
+              <div class="control">
+                <input name="username" class="input" type="text" placeholder="Your username"
+                       [(ngModel)]="userLoginData.username">
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="label">Password</label>
+              <div class="control">
+                <input name="password" class="input" type="password" placeholder="Your password"
+                       [(ngModel)]="userLoginData.password">
+              </div>
+            </div>
+            <div class="field">
+              <div class="control">
+                <button type="button" class="button is-primary is-fullwidth"
+                        (click)="$event.preventDefault(); loginUser()">Login
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="has-background-primary">
+  <div class="content has-text-centered">
+    <p>
+      <strong>Connect with us:</strong>
+      <a href="https://www.facebook.com/RegterschotRacing/" class="icon is-medium"><i class="fab fa-facebook"></i></a>
+      <a href="https://www.instagram.com/regterschotracing/" class="icon is-medium"><i class="fab fa-instagram"></i></a>
+    </p>
+  </div>
+</footer>
+</body>
+
+
+

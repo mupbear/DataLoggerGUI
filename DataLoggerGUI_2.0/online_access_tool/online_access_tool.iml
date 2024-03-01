@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module version="4">
+  <component name="AdditionalModuleElements">
+    <content url="file://$MODULE_DIR$" dumb="true">
+      <excludeFolder url="file://$MODULE_DIR$/src/main/java/nl/han/oose/project/presentation/frontend-app/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/src/main/java/nl/han/oose/project/presentation/frontend-app/tmp" />
+    </content>
+  </component>
+  <component name="SonarLintModuleSettings">
+    <option name="uniqueId" value="132560e2-5cb6-4b86-af6c-a8e746adbb67" />
+  </component>
+</module>

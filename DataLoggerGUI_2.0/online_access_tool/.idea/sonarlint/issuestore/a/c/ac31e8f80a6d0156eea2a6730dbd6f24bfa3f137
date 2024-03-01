@@ -1,0 +1,18 @@
+
+T
+java:S1128"2Remove this unused import 'jakarta.inject.Inject'.(‘ø”şÿÿÿÿ8×¾üÁ1
+K
+java:S1128".Remove this unused import 'jakarta.ws.rs.GET'.(øŞ·ï8×¾üÁ1
+U
+java:S1128"3Remove this unused import 'jakarta.ws.rs.Produces'.(ÍşŸÄûÿÿÿÿ8×¾üÁ1
+V
+java:S1128"9Remove this unused import 'jakarta.ws.rs.core.MediaType'.(¦ø§ö8×¾üÁ1
+Z
+java:S1128	"8Remove this unused import 'jakarta.ws.rs.core.Response'.(À ¯¯øÿÿÿÿ8×¾üÁ1
+t
+java:S1128
+"RRemove this unused import 'nl.han.oose.project.business.services.RaceDataService'.(Û§‡îûÿÿÿÿ8Ÿ×¾üÁ1
+p
+java:S1128"NRemove this unused import 'nl.han.oose.project.business.services.UserService'.(èØ­¦ÿÿÿÿÿ8«ÂäûÁ1
+s
+java:S1128"VRemove this unused import 'nl.han.oose.project.presentation.DTOs.RaceDataResponseDTO'.(¸ÇúÍ8Ÿ×¾üÁ1

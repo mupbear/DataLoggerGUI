@@ -1,0 +1,27 @@
+  .navbar-carpicker{
+    padding-top: 0.5rem;
+  }
+
+  .has-text-custom{
+    color: #81c8bd;
+  }
+
+  .has-text-custom:hover{
+    color: aquamarine;
+  }
+
+  .dropdown-custom{
+    background-color: #343740;
+  }
+
+  .dropdown-custom:hover{
+    background-color: #343740 ;
+  }
+
+  .custom-button {
+    background-color: rgba(52,55,64, 0.5);
+    transition: background-color 0.6s ease;
+
+  }
+
+

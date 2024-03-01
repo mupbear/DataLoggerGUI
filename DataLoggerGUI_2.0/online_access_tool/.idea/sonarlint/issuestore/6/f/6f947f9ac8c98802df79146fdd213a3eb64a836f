@@ -1,0 +1,21 @@
+
+ƒ
+java:S1450"aRemove the "maximumRetrievedId" field and declare it as a local variable in the relevant methods.(éÈì´üÿÿÿÿ8¿ížì½1
+Y
+java:S1854+"=Remove this useless assignment to local variable "timestamp".(­‰®E8íÞ·î½1
+V
+java:S1854("9Remove this useless assignment to local variable "rowId".(ß½¸Î8íÞ·î½1
+G
+java:S1481("*Remove this unused "rowId" local variable.(ß½¸Î8íÞ·î½1
+J
+java:S1481+".Remove this unused "timestamp" local variable.(­‰®E8íÞ·î½1
+L	java:S106N"+Replace this use of System.out by a logger.(ÒŸñ»øÿÿÿÿ8©¡¹î½1
+]	java:S125P"<This block of commented-out lines of code should be removed.(—‚³ßøÿÿÿÿ8íÞ·î½1
+]	java:S125W"<This block of commented-out lines of code should be removed.(éØ»Úûÿÿÿÿ8íÞ·î½1
+o	java:S100^"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(”Ì¹åüÿÿÿÿ8Ëížì½1
+h
+java:S6201i"FReplace this instanceof check and cast with 'instanceof Number number'(ÌïóÔøÿÿÿÿ8Íížì½1
+X
+java:S1068"6Remove this unused "maximumRetrievedId" private field.(éÈì´üÿÿÿÿ8Ïížì½1
+U
+java:S1144"7Remove this unused private "convertFloatToBits" method.(àìÃÉ8ñá…í½1

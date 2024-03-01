@@ -1,0 +1,14 @@
+# Use an official WildFly image as a base
+FROM quay.io/wildfly/wildfly:27.0.0.Final-jdk17
+
+# Set the working directory in the container
+WORKDIR /opt/jboss/wildfly/standalone/deployments/
+
+# Copy your WAR file to the deployments directory
+COPY /target/online_access_tool.war /opt/jboss/wildfly/standalone/deployments/
+
+# Expose the ports for WildFly
+EXPOSE 8080
+
+# Start WildFly in standalone mode
+CMD ["/opt/jboss/wildfly/bin/standalone.sh", "-b", "0.0.0.0"]

@@ -1,0 +1,29 @@
+<div class="box black-box box-padding mt-2 mr-2">
+  <div class="field is-grouped">
+    <div class="control">
+      <label class="label has-text-white" for="startDate">Start Date:</label>
+      <input class="input is-small is-custom" type="datetime-local" id="startDate" [(ngModel)]="startDateParam"
+             name="startDate">
+    </div>
+
+    <div class="control">
+      <label class="label has-text-white" for="endDate">End Date:</label>
+      <input class="input is-small is-custom" type="datetime-local" id="endDate" [(ngModel)]="endDateParam"
+             name="endDate">
+    </div>
+
+    <div class="control submitbutton">
+      <button class="button is-custom is-small is-custom" (click)="updateUrlParams()">Submit Dates
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="box black-box box-padding mt-2 mr-2 padding">
+  <button class="button is-custom" (click)="switchToEndpointStrategy()">Switch to Race Data history</button>
+  <button class="button is-custom" (click)="switchToLocalStrategy()">Switch to Local Data</button>
+  <button class="button is-custom" (click)="switchToLiveDataStrategy()">Start Live Data</button>
+  <button class="button is-custom" (click)="stopLiveData()">Stop Live Data</button>
+  <button class="button is-custom" (click)="refreshData()">Refresh Plot</button>
+  <plotly-plot [data]="graph.data" [layout]="graph.layout" [useResizeHandler]="true"></plotly-plot>
+</div>

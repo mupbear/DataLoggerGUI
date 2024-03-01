@@ -1,0 +1,10 @@
+nl\han\oose\project\crosscutting_concerns\AuthenticationTest.class
+nl\han\oose\project\datasource\util\DatabasePropertiesTest.class
+nl\han\oose\project\presentation\exception_mappers\UnauthorizedExceptionMapperTest.class
+nl\han\oose\project\business\services\RaceDataServiceImplTest.class
+nl\han\oose\project\datasource\DAO\RaceDataDAOTest.class
+nl\han\oose\project\presentation\exception_mappers\UserNotFoundExceptionMapperTest.class
+nl\han\oose\project\presentation\resources\HomeResourceTest.class
+nl\han\oose\project\presentation\resources\LoginResourceTest.class
+nl\han\oose\project\business\services\UserServiceImplTest.class
+nl\han\oose\project\datasource\DAO\UserDAOTest.class
